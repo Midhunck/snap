@@ -1,0 +1,2406 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>snap · From Notes to Action</title>
+  <link rel="icon" type="image/png" href="snap-logo.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- Top Desktop Control Toolbar -->
+  <header class="desktop-toolbar">
+    <div class="toolbar-brand">
+      <span class="toolbar-logo">
+        <img src="snap-logo.png" alt="snap logo" class="toolbar-logo-img">
+      </span>
+      <span class="toolbar-title">snap</span>
+      <span class="toolbar-tagline">From Notes to Action</span>
+      <span class="toolbar-badge">Live Preview</span>
+    </div>
+
+    <div class="toolbar-actions">
+      <a class="tool-btn" href="login.html">Sign in</a>
+      <button class="tool-btn" id="toggleFrameBtn" title="Toggle Phone Frame">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <rect x="5" y="2" width="14" height="20" rx="3"></rect>
+          <line x1="12" y1="18" x2="12" y2="18.01"></line>
+        </svg>
+        <span>Toggle Frame</span>
+      </button>
+
+      <button class="tool-btn highlight-tool-btn" id="openTask288ToolbarBtn" title="Open Mobile Task View (TASK-000288)">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3">
+          <circle cx="12" cy="12" r="10"></circle>
+          <circle cx="12" cy="12" r="3" fill="currentColor"></circle>
+        </svg>
+        <span>Open Task (TASK-000288)</span>
+      </button>
+
+      <button class="tool-btn" id="resetDemoBtn" title="Reset Demo Data">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"></path>
+          <path d="M3 3v5h5"></path>
+        </svg>
+        <span>Reset State</span>
+      </button>
+
+      <div class="active-status-pill">
+        <span class="pulse-dot"></span>
+        <span id="syncStatusText">Synced &amp; Ready</span>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Viewport Shell -->
+  <main class="app-viewport-wrapper">
+    <div class="device-frame" id="deviceFrame">
+      
+      <!-- Hardware details for iPhone style frame -->
+      <div class="frame-notch-wrapper">
+        <div class="dynamic-island"></div>
+      </div>
+
+      <!-- App Screen Inside Frame -->
+      <div class="phone-screen" id="phoneScreen">
+
+        <!-- Status Bar -->
+        <div class="status-bar" id="statusBar">
+          <span class="status-time" id="statusClock">9:41</span>
+          <div class="status-icons">
+            <svg class="status-icon" width="17" height="11" viewBox="0 0 17 11" fill="currentColor">
+              <path d="M12.5 0.5C14.7 0.5 16.5 2.3 16.5 4.5C16.5 6.7 14.7 8.5 12.5 8.5C10.3 8.5 8.5 6.7 8.5 4.5C8.5 2.3 10.3 0.5 12.5 0.5ZM12.5 2C11.1 2 10 3.1 10 4.5C10 5.9 11.1 7 12.5 7C13.9 7 15 5.9 15 4.5C15 3.1 13.9 2 12.5 2Z" opacity="0.3"/>
+              <path d="M1.5 8.5H3V10.5H1.5V8.5ZM5 6H6.5V10.5H5V6ZM8.5 3.5H10V10.5H8.5V3.5ZM12 1H13.5V10.5H12V1Z"/>
+            </svg>
+            <svg class="status-icon" width="16" height="12" viewBox="0 0 16 12" fill="currentColor">
+              <path d="M8 9.5C8.82843 9.5 9.5 8.82843 9.5 8C9.5 7.17157 8.82843 6.5 8 6.5C7.17157 6.5 6.5 7.17157 6.5 8C6.5 8.82843 7.17157 9.5 8 9.5Z"/>
+              <path d="M4.9 5.4C5.7 4.6 6.8 4.1 8 4.1C9.2 4.1 10.3 4.6 11.1 5.4L12.2 4.3C11.1 3.2 9.6 2.5 8 2.5C6.4 2.5 4.9 3.2 3.8 4.3L4.9 5.4Z"/>
+              <path d="M2.1 2.6C3.7 1 5.7 0.1 8 0.1C10.3 0.1 12.3 1 13.9 2.6L15 1.5C13.2 -0.3 10.7 -1.2 8 -1.2C5.3 -1.2 2.8 -0.3 1 1.5L2.1 2.6Z" opacity="0.4"/>
+            </svg>
+            <div class="battery-indicator">
+              <div class="battery-level"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Scrollable Screen Content Container -->
+        <div class="screen-scroll-container" id="screenScrollArea">
+
+          <!-- ==================== TAB 1: HOME VIEW (SPACES & MORE EXPLORER) ==================== -->
+          <section class="view-tab active" id="viewHome">
+            
+            <!-- Top App Header -->
+            <header class="app-header">
+              <div class="header-left">
+                <!-- Hamburger Menu Button to open Drawer -->
+                <button class="drawer-hamburger-btn" id="openDrawerBtn" aria-label="Open Navigation Drawer" title="Open Spaces &amp; Teamspaces">
+                  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round">
+                    <line x1="3" y1="6" x2="21" y2="6"></line>
+                    <line x1="3" y1="12" x2="16" y2="12"></line>
+                    <line x1="3" y1="18" x2="21" y2="18"></line>
+                  </svg>
+                </button>
+                <div class="brand-container">
+                  <div class="snap-logo-icon">
+                    <img src="snap-logo.png" alt="snap logo" class="snap-brand-logo-img">
+                  </div>
+                  <div class="snap-brand-text-wrap">
+                    <span class="snap-brand-text">snap</span>
+                    <span class="snap-brand-tagline">From Notes to Action</span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="header-right">
+                <button class="profile-avatar-btn" id="openProfileBtn" aria-label="User Profile">
+                  <span>M</span>
+                </button>
+              </div>
+            </header>
+
+            <!-- Hero Action Card: "Start your day" — Check out appears when already checked in -->
+            <div class="hero-card" id="heroStartDayCard">
+              <span class="hero-note-tab" aria-hidden="true"></span>
+              <div class="hero-card-content">
+                <h3 class="hero-card-title" id="heroCardTitle">Start your day</h3>
+                <div class="hero-site-reached-tag" id="heroSiteReachedTag" hidden>
+                  <span class="live-dot-beacon"></span>
+                  <span class="site-tag-prefix"></span>
+                  <span class="site-tag-name" id="heroReachedSiteName">Fitout work</span>
+                  <span class="site-tag-action" id="heroSiteAction">Change site</span>
+                </div>
+                <p class="hero-card-desc" id="heroCardDesc">Choose your work location to record attendance and access assigned tasks.</p>
+                <div class="hero-card-actions">
+                  <button class="primary-pill-btn" id="arriveSiteBtn">
+                    <svg class="btn-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                      <path d="M12 21s-7-5.4-7-11a7 7 0 0 1 14 0c0 5.6-7 11-7 11z"></path>
+                      <circle cx="12" cy="10" r="2.2"></circle>
+                    </svg>
+                    <span id="arriveBtnLabel">Check In to a Site</span>
+                  </button>
+                  <button class="checkout-pill-btn hidden" id="checkoutSiteBtn" type="button">
+                    <svg class="btn-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                      <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
+                      <polyline points="16 17 21 12 16 7"></polyline>
+                      <line x1="21" y1="12" x2="9" y2="12"></line>
+                    </svg>
+                    <span>Check out</span>
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <!-- ================= HOME DASHBOARD (IMAGE 1) ================= -->
+            <div class="home-dashboard-container">
+              
+              <!-- Category: WORK MANAGEMENT -->
+              <div class="home-category-group">
+                <div class="home-category-header">
+                  <span class="home-category-title">Work</span>
+                </div>
+                <div class="home-category-card">
+                  <!-- Projects (Active Pill Row) -->
+                  <div class="home-nav-row" id="homeProjectsItem">
+                    <div class="home-row-left">
+                      <span class="home-item-icon-badge">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                          <path d="M4 4h4l2 2h10a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2z"></path>
+                          <line x1="8" y1="11" x2="8" y2="15"></line>
+                          <line x1="12" y1="10" x2="12" y2="15"></line>
+                          <line x1="16" y1="12" x2="16" y2="15"></line>
+                        </svg>
+                      </span>
+                      <span class="home-item-copy">
+                        <span class="home-item-title">Projects</span>
+                        <span class="home-item-sub">Organize work and track progress</span>
+                      </span>
+                    </div>
+                    <div class="home-row-right">
+                      <span class="home-item-meta" id="homeProjectsMeta">9</span>
+                      <svg class="row-chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                        <polyline points="9 18 15 12 9 6"></polyline>
+                      </svg>
+                    </div>
+                  </div>
+
+                  <!-- Snaps -->
+                  <div class="home-nav-row" id="homeSnapsItem">
+                    <div class="home-row-left">
+                      <span class="home-item-icon-badge">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                          <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                          <polyline points="14 2 14 8 20 8"></polyline>
+                        </svg>
+                      </span>
+                      <span class="home-item-copy">
+                        <span class="home-item-title">SNAP Docs</span>
+                        <span class="home-item-sub">Turn notes into actionable tasks</span>
+                      </span>
+                    </div>
+                    <div class="home-row-right">
+                      <span class="home-item-meta" id="homeSnapsMeta">9</span>
+                      <svg class="row-chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                        <polyline points="9 18 15 12 9 6"></polyline>
+                      </svg>
+                    </div>
+                  </div>
+
+                  <!-- Tasks -->
+                  <div class="home-nav-row" id="homeTasksItem">
+                    <div class="home-row-left">
+                      <span class="home-item-icon-badge">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                          <path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"></path>
+                          <rect x="8" y="2" width="8" height="4" rx="1" ry="1"></rect>
+                          <line x1="9" y1="12" x2="15" y2="12"></line>
+                          <line x1="9" y1="16" x2="13" y2="16"></line>
+                        </svg>
+                      </span>
+                      <span class="home-item-copy">
+                        <span class="home-item-title">Tasks</span>
+                        <span class="home-item-sub">Manage tasks and track completion</span>
+                      </span>
+                    </div>
+                    <div class="home-row-right">
+                      <span class="home-item-meta" id="homeTasksMeta">6</span>
+                      <svg class="row-chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                        <polyline points="9 18 15 12 9 6"></polyline>
+                      </svg>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Category 3: STATISTICS AND REPORTS -->
+              <div class="home-category-group">
+                <div class="home-category-header">
+                  <span class="home-category-title">Reports</span>
+                </div>
+                <div class="home-category-card">
+                  <!-- Time tracking -->
+                  <div class="home-nav-row" id="homeTimeTrackingItem">
+                    <div class="home-row-left">
+                      <span class="home-item-icon-badge">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                          <circle cx="12" cy="12" r="10"></circle>
+                          <polyline points="12 6 12 12 16 14"></polyline>
+                        </svg>
+                      </span>
+                      <span class="home-item-title">Time tracking</span>
+                    </div>
+                    <div class="home-row-right">
+                      <span class="home-item-meta">142.2h</span>
+                      <svg class="row-chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                        <polyline points="9 18 15 12 9 6"></polyline>
+                      </svg>
+                    </div>
+                  </div>
+
+                  <!-- Project attendance -->
+                  <div class="home-nav-row" id="homeAttendanceItem">
+                    <div class="home-row-left">
+                      <span class="home-item-icon-badge">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                          <path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"></path>
+                          <rect x="8" y="2" width="8" height="4" rx="1" ry="1"></rect>
+                          <polyline points="9 13 11 15 15 11"></polyline>
+                        </svg>
+                      </span>
+                      <span class="home-item-title">Project attendance</span>
+                    </div>
+                    <div class="home-row-right">
+                      <span class="home-item-meta">94% present</span>
+                      <svg class="row-chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                        <polyline points="9 18 15 12 9 6"></polyline>
+                      </svg>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+            </div> <!-- End home-dashboard-container -->
+
+            <!-- Bottom Spacer to allow scrolling above floating nav -->
+            <div class="bottom-scroll-spacer"></div>
+          </section>
+
+          <!-- ==================== SUB-VIEW: PROJECTS (MATCHING SNAP WEB) ==================== -->
+          <section class="sub-view-panel" id="viewSites">
+            <header class="subview-header">
+              <button class="back-pill-btn" id="backFromSites" type="button" aria-label="Back">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+                  <polyline points="15 18 9 12 15 6"></polyline>
+                </svg>
+              </button>
+              <h2 class="subview-title">Projects</h2>
+              <span class="subview-header-spacer" aria-hidden="true"></span>
+            </header>
+
+            <div class="subview-body projects-subview-body">
+              <div class="projects-toolbar" id="projectsToolbar">
+                <div class="projects-filter-bar">
+                  <button class="filter-dropdown-pill" id="teamspaceFilterBtn" title="Filter by Teamspace">
+                    <span id="selectedTeamspaceLabel">All teamspaces</span>
+                    <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                  </button>
+                  <button class="filter-chip-btn" id="starredFilterBtn" title="Toggle Starred / Favorites">
+                    <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor">
+                      <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+                    </svg>
+                    <span>Favorites</span>
+                  </button>
+                  <button type="button" class="projects-search-toggle" id="openProjectsSearchBtn" aria-label="Search projects">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                      <circle cx="11" cy="11" r="7"></circle>
+                      <line x1="20" y1="20" x2="16.2" y2="16.2"></line>
+                    </svg>
+                  </button>
+                </div>
+
+                <div class="projects-search-layer" id="projectsSearchLayer">
+                  <div class="projects-search-bar">
+                    <svg class="search-lens-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#7A7888" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                      <circle cx="11" cy="11" r="8"></circle>
+                      <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                    </svg>
+                    <input type="text" class="projects-search-input" id="projectsSearchInput" placeholder="Projects you can open." autocomplete="off">
+                    <button class="search-clear-btn hidden" id="clearProjectsSearchBtn" type="button" title="Clear search" aria-label="Clear search">✕</button>
+                  </div>
+                  <button type="button" class="projects-search-toggle" id="closeProjectsSearchBtn" aria-label="Close search">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true">
+                      <line x1="6" y1="6" x2="18" y2="18"></line>
+                      <line x1="18" y1="6" x2="6" y2="18"></line>
+                    </svg>
+                  </button>
+                </div>
+              </div>
+
+              <!-- Projects Cards List (Dynamically rendered with SNAP Web cards) -->
+              <div class="projects-cards-list" id="sitesContainer">
+                <!-- Project cards rendered via JS -->
+              </div>
+            </div>
+            <button type="button" class="snap-fab-btn" id="projectsNewFabBtn" aria-label="New project">
+              <svg class="snap-fab-plus" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+            </button>
+          </section>
+
+          <!-- ==================== SUB-VIEW: TASKS ==================== -->
+          <section class="sub-view-panel" id="viewTasks">
+            <header class="subview-header">
+              <button class="back-pill-btn" id="backFromTasks">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+                  <polyline points="15 18 9 12 15 6"></polyline>
+                </svg>
+                <span>Back</span>
+              </button>
+              <h2 class="subview-title">Tasks</h2>
+              <button class="add-mini-btn" id="openAddTaskModalBtn" title="Add new task">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                  <line x1="12" y1="5" x2="12" y2="19"></line>
+                  <line x1="5" y1="12" x2="19" y2="12"></line>
+                </svg>
+              </button>
+            </header>
+
+            <div class="subview-body">
+              <!-- Filter Tabs -->
+              <div class="filter-pills-bar">
+                <button class="filter-tab active" data-filter="all">All (<span id="taskCountAll">5</span>)</button>
+                <button class="filter-tab" data-filter="pending">Pending (<span id="taskCountPending">5</span>)</button>
+                <button class="filter-tab" data-filter="completed">Done (<span id="taskCountDone">0</span>)</button>
+              </div>
+
+              <div class="tasks-list" id="tasksListContainer">
+                <!-- Task items rendered via JS -->
+              </div>
+            </div>
+          </section>
+
+          <!-- ==================== SUB-VIEW: SNAPS (MATCHING SNAP WEB) ==================== -->
+          <section class="sub-view-panel" id="viewSnaps">
+            <header class="subview-header snaps-header">
+              <button class="back-pill-btn" id="backFromSnaps">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+                  <polyline points="15 18 9 12 15 6"></polyline>
+                </svg>
+                <span>Back</span>
+              </button>
+              <h2 class="subview-title">Snaps</h2>
+              <span class="subview-header-spacer" aria-hidden="true"></span>
+            </header>
+
+            <div class="subview-body snaps-subview-body">
+              <p class="projects-page-subtitle">Documents and spreadsheets for this workspace.</p>
+
+              <div class="projects-search-bar">
+                <svg class="search-lens-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#7A7888" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                  <circle cx="11" cy="11" r="8"></circle>
+                  <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                </svg>
+                <input type="text" class="projects-search-input" id="snapsSearchInput" placeholder="Search snaps..." autocomplete="off">
+              </div>
+
+              <div class="snaps-toolbar">
+                <button class="filter-dropdown-pill" id="snapsOwnerFilterBtn" type="button">
+                  <span id="snapsOwnerLabel">All owners</span>
+                  <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                </button>
+                <button class="filter-dropdown-pill" id="snapsSortFilterBtn" type="button">
+                  <span id="snapsSortLabel">Recently updated</span>
+                  <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                </button>
+              </div>
+
+              <div class="snaps-meta-row">
+                <span class="snaps-count" id="snapsCountLabel">5 snaps</span>
+                <div class="snaps-view-toggle">
+                  <button class="snaps-view-btn active" id="snapsGridBtn" type="button" title="Grid view" aria-label="Grid view">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect></svg>
+                  </button>
+                  <button class="snaps-view-btn" id="snapsListBtn" type="button" title="List view" aria-label="List view">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><line x1="8" y1="6" x2="21" y2="6"></line><line x1="8" y1="12" x2="21" y2="12"></line><line x1="8" y1="18" x2="21" y2="18"></line><line x1="3" y1="6" x2="3.01" y2="6"></line><line x1="3" y1="12" x2="3.01" y2="12"></line><line x1="3" y1="18" x2="3.01" y2="18"></line></svg>
+                  </button>
+                </div>
+              </div>
+
+              <div class="snaps-grid" id="snapsGrid"></div>
+            </div>
+            <div class="snap-fab" id="snapsNewFab">
+              <button type="button" class="snap-fab-backdrop" id="snapsNewBackdrop" hidden aria-label="Close actions"></button>
+              <div class="snap-fab-menu" id="snapsNewMenu" hidden>
+                <button type="button" class="snap-fab-item" data-snap-kind="doc">
+                  <span class="snap-fab-label">Document</span>
+                  <span class="snap-fab-ico snap-fab-ico-teal" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline></svg></span>
+                </button>
+                <button type="button" class="snap-fab-item" data-snap-kind="sheet">
+                  <span class="snap-fab-label">Spreadsheet</span>
+                  <span class="snap-fab-ico snap-fab-ico-blue" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"></rect><line x1="3" y1="9" x2="21" y2="9"></line><line x1="3" y1="15" x2="21" y2="15"></line><line x1="9" y1="3" x2="9" y2="21"></line></svg></span>
+                </button>
+              </div>
+              <button type="button" class="snap-fab-btn" id="snapsNewFabBtn" aria-label="New snap" aria-expanded="false" aria-controls="snapsNewMenu">
+                <svg class="snap-fab-plus" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+                <svg class="snap-fab-close" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+              </button>
+            </div>
+          </section>
+
+          <!-- Snap document (web MoM screen, fitted for mobile) -->
+          <section class="sub-view-panel snap-doc-panel" id="viewSnapDetail">
+            <header class="snap-doc-bar">
+              <button class="snap-doc-icon-btn" id="snapDetailBackBtn" type="button" aria-label="Back to snaps">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><polyline points="15 18 9 12 15 6"></polyline></svg>
+              </button>
+              <h2 class="snap-doc-bar-title" id="snapDocHeaderTitle">Snap</h2>
+              <button class="snap-doc-icon-btn" id="snapDocSearchBtn" type="button" aria-label="Search in snap">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="11" cy="11" r="7"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+              </button>
+              <span class="snap-doc-timer" id="snapDocTimer">00:00:00</span>
+              <button class="snap-doc-save" id="snapSaveCloseBtn" type="button">Save &amp; close</button>
+            </header>
+            <div class="snap-doc-search hidden" id="snapDocSearchWrap">
+              <input type="search" id="snapDocSearchInput" placeholder="Search in this snap" autocomplete="off">
+            </div>
+            <div class="snap-doc-scroll" id="snapDocBody"></div>
+            <div class="snap-fab" id="snapSideFab" hidden>
+              <button type="button" class="snap-fab-backdrop" id="snapFabBackdrop" hidden aria-label="Close actions"></button>
+              <div class="snap-fab-menu" id="snapSideMenu" hidden>
+                <button type="button" class="snap-fab-item" data-snap-action="Discussions">
+                  <span class="snap-fab-label">Discussions</span>
+                  <span class="snap-fab-ico snap-fab-ico-teal" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M2.992 16.342a2 2 0 0 1 .094 1.167l-1.065 3.29a1 1 0 0 0 1.236 1.168l3.413-.998a2 2 0 0 1 1.099.092 10 10 0 1 0-4.777-4.719"></path></svg></span>
+                </button>
+                <button type="button" class="snap-fab-item" data-snap-action="Linked tasks">
+                  <span class="snap-fab-label">Linked tasks</span>
+                  <span class="snap-fab-ico snap-fab-ico-blue" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M9 17H7A5 5 0 0 1 7 7h2"></path><path d="M15 7h2a5 5 0 1 1 0 10h-2"></path><line x1="8" x2="16" y1="12" y2="12"></line></svg></span>
+                </button>
+                <button type="button" class="snap-fab-item" data-snap-action="Collaborators">
+                  <span class="snap-fab-label">Collaborators</span>
+                  <span class="snap-fab-ico snap-fab-ico-purple" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path><path d="M16 3.128a4 4 0 0 1 0 7.744"></path><path d="M22 21v-2a4 4 0 0 0-3-3.87"></path><circle cx="9" cy="7" r="4"></circle></svg></span>
+                </button>
+                <button type="button" class="snap-fab-item" data-snap-action="Previous meetings">
+                  <span class="snap-fab-label">Previous meetings</span>
+                  <span class="snap-fab-ico snap-fab-ico-teal" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"></path><path d="M3 3v5h5"></path><path d="M12 7v5l4 2"></path></svg></span>
+                </button>
+                <button type="button" class="snap-fab-item" data-snap-action="Slide show">
+                  <span class="snap-fab-label">Slide show</span>
+                  <span class="snap-fab-ico snap-fab-ico-blue" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h20"></path><path d="M21 3v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V3"></path><path d="m7 21 5-5 5 5"></path></svg></span>
+                </button>
+                <button type="button" class="snap-fab-item" data-snap-action="Print">
+                  <span class="snap-fab-label">Print</span>
+                  <span class="snap-fab-ico snap-fab-ico-purple" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path><path d="M6 9V3a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v6"></path><rect x="6" y="14" width="12" height="8" rx="1"></rect></svg></span>
+                </button>
+              </div>
+              <button type="button" class="snap-fab-btn" id="snapSideFabBtn" aria-label="Snap actions" aria-expanded="false">
+                <svg class="snap-fab-plus" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+                <svg class="snap-fab-close" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+              </button>
+            </div>
+          </section>
+
+          <!-- ==================== SUB-VIEW: FIELD NOTES ==================== -->
+          <section class="sub-view-panel" id="viewNotes">
+            <header class="subview-header">
+              <button class="back-pill-btn" id="backFromNotes">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+                  <polyline points="15 18 9 12 15 6"></polyline>
+                </svg>
+                <span>Back</span>
+              </button>
+              <h2 class="subview-title">Field Notes</h2>
+              <button class="add-mini-btn" id="openAddNoteModalBtn" title="Create note">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                  <line x1="12" y1="5" x2="12" y2="19"></line>
+                  <line x1="5" y1="12" x2="19" y2="12"></line>
+                </svg>
+              </button>
+            </header>
+
+            <div class="subview-body">
+              <p class="subview-desc">Observations and daily site notes.</p>
+              
+              <div class="notes-feed" id="notesFeedContainer">
+                <!-- Notes cards rendered here -->
+              </div>
+            </div>
+          </section>
+
+          <!-- ==================== SUB-VIEW: SETTINGS ==================== -->
+          <section class="sub-view-panel" id="viewSettings">
+            <header class="subview-header">
+              <button class="back-pill-btn" id="backFromSettings">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+                  <polyline points="15 18 9 12 15 6"></polyline>
+                </svg>
+                <span>Back</span>
+              </button>
+              <h2 class="subview-title">Settings</h2>
+              <span class="subview-counter">v2.4.1</span>
+            </header>
+
+            <div class="subview-body">
+              <!-- User Card -->
+              <div class="settings-profile-card">
+                <div class="profile-big-avatar">M</div>
+                <div class="profile-big-details">
+                  <h3 class="profile-name">Midhun Raj</h3>
+                  <p class="profile-role">Lead Site Inspector · SNAP Enterprise</p>
+                  <span class="profile-badge">ID: #SN-88421</span>
+                </div>
+              </div>
+
+              <!-- Settings Group 1 -->
+              <div class="settings-group">
+                <span class="settings-group-title">DATA &amp; SYNC</span>
+                <div class="settings-group-card">
+                  <div class="setting-item-row">
+                    <div class="setting-label">
+                      <strong>Auto-sync Photos</strong>
+                      <span>Upload automatically when on Wi-Fi</span>
+                    </div>
+                    <label class="toggle-switch">
+                      <input type="checkbox" checked id="autoSyncToggle">
+                      <span class="toggle-slider"></span>
+                    </label>
+                  </div>
+                  <div class="row-separator"></div>
+                  <div class="setting-item-row">
+                    <div class="setting-label">
+                      <strong>Offline Cache</strong>
+                      <span>24 MB cached for offline field work</span>
+                    </div>
+                    <button class="mini-outline-btn" id="clearCacheBtn">Clear</button>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Settings Group 2 -->
+              <div class="settings-group">
+                <span class="settings-group-title">PREFERENCES</span>
+                <div class="settings-group-card">
+                  <div class="setting-item-row">
+                    <div class="setting-label">
+                      <strong>High Accuracy GPS</strong>
+                      <span>Better site perimeter detection</span>
+                    </div>
+                    <label class="toggle-switch">
+                      <input type="checkbox" checked>
+                      <span class="toggle-slider"></span>
+                    </label>
+                  </div>
+                  <div class="row-separator"></div>
+                  <div class="setting-item-row">
+                    <div class="setting-label">
+                      <strong>Sound &amp; Haptics</strong>
+                      <span>Vibrate when attendance or a task changes</span>
+                    </div>
+                    <label class="toggle-switch">
+                      <input type="checkbox" checked>
+                      <span class="toggle-slider"></span>
+                    </label>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </section>
+
+          <!-- ==================== SUB-VIEW: PROJECT DETAILS (SUPERVISOR ATTENDANCE & WORK) ==================== -->
+          <!-- ==================== SUB-VIEW: PROJECT DETAILS (MATCHING SNAP WEB INTERFACE) ==================== -->
+          <section class="sub-view-panel" id="viewProjectDetails">
+            <!-- Sticky Mobile App Top Bar -->
+            <header class="mobile-project-appbar">
+              <div class="mobile-appbar-left">
+                <button class="mobile-icon-btn back-btn" id="backFromProjectDetails" title="Back to Projects" aria-label="Back">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+                    <polyline points="15 18 9 12 15 6"></polyline>
+                  </svg>
+                </button>
+                <div class="mobile-appbar-info">
+                  <span class="mobile-proj-badge" id="projectDetailsBadgeInitial">T</span>
+                  <div class="mobile-appbar-copy">
+                    <div class="mobile-appbar-title-row">
+                      <button type="button" class="mobile-proj-title" id="projectDetailsTitle">Table Ping</button>
+                      <button type="button" class="project-info-btn" id="projectInfoBtn" aria-label="Project info" title="Project info">
+                        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                          <circle cx="12" cy="12" r="9"></circle>
+                          <line x1="12" y1="11" x2="12" y2="16"></line>
+                          <line x1="12" y1="8" x2="12.01" y2="8"></line>
+                        </svg>
+                      </button>
+                    </div>
+                    <div class="mobile-proj-subline">
+                      <span id="projectDetailsSubtitle">Test Teamspace</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="mobile-appbar-right">
+                <button class="mobile-icon-btn" id="projMoreOptionsBtn" title="Project Options">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+                    <circle cx="5" cy="12" r="1.8"></circle>
+                    <circle cx="12" cy="12" r="1.8"></circle>
+                    <circle cx="19" cy="12" r="1.8"></circle>
+                  </svg>
+                </button>
+              </div>
+            </header>
+
+
+
+            <!-- Primary Mobile Segmented Switcher (Works, Attendance, Meetings, Files) -->
+            <div class="mobile-segmented-tab-wrapper">
+              <nav class="mobile-segmented-track" id="projTabsNav">
+                <button class="mobile-segmented-tab active" data-tab="works" id="tabNavWorks">
+                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+                    <path d="M9 11l3 3L22 4"></path>
+                    <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path>
+                  </svg>
+                  <span>Works</span>
+                  <span class="mobile-tab-counter" id="tabTasksBadge">9</span>
+                </button>
+
+                <button class="mobile-segmented-tab" data-tab="attendance" id="tabNavAttendance">
+                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+                    <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                    <line x1="16" y1="2" x2="16" y2="6"></line>
+                    <line x1="8" y1="2" x2="8" y2="6"></line>
+                    <line x1="3" y1="10" x2="21" y2="10"></line>
+                  </svg>
+                  <span>Attendance</span>
+                  <span class="mobile-tab-counter counter-accent" id="tabAttendanceBadge">8/10</span>
+                </button>
+
+                <button class="mobile-segmented-tab" data-tab="documents" id="tabNavDocuments">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+                    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                    <polyline points="14 2 14 8 20 8"></polyline>
+                  </svg>
+                  <span>Docs</span>
+                </button>
+              </nav>
+            </div>
+
+            <!-- Geo-fence lock banner (shown when project requires check-in) -->
+            <div class="project-geo-lock-banner hidden" id="projectGeoLockBanner">
+              <div class="geo-lock-banner-left">
+                <span class="geo-lock-icon">🔒</span>
+                <div>
+                  <strong>Check-in required</strong>
+                  <p id="projectGeoLockMsg">Check in at the site to use this project.</p>
+                </div>
+              </div>
+              <button type="button" class="geo-lock-checkin-btn" id="projectGeoLockCheckInBtn">Check in</button>
+            </div>
+
+            <!-- Scrollable Content Container for Sub-Panels -->
+            <div class="mobile-proj-scroll-body" id="mobileProjScrollBody">
+
+              <!-- ================= SUB-PANEL 1: WORKS (TASK ACTIVITIES) ================= -->
+              <div class="project-tab-view active" id="projectTasksPanel">
+                <!-- Works Toolbar & Filter -->
+                <div class="works-control-row">
+                  <div class="works-stage-pills-scroll" id="tasksStageSelector">
+                    <button class="stage-pill active" data-stage="all">All (<span id="countStageAll">9</span>)</button>
+                    <button class="stage-pill" data-stage="not_started">
+                      <span class="stage-dot dot-orange"></span>
+                      <span>Not started (<span id="countStageNotStarted">5</span>)</span>
+                    </button>
+                    <button class="stage-pill" data-stage="in_progress">
+                      <span class="stage-dot dot-teal"></span>
+                      <span>In progress (<span id="countStageInProgress">0</span>)</span>
+                    </button>
+                    <button class="stage-pill" data-stage="done">
+                      <span class="stage-dot dot-purple"></span>
+                      <span>Done (<span id="countStageDone">4</span>)</span>
+                    </button>
+                    <button class="stage-pill" data-stage="on_hold">
+                      <span class="stage-dot dot-red"></span>
+                      <span>On hold (<span id="countStageOnHold">0</span>)</span>
+                    </button>
+                  </div>
+
+                  <div class="works-sub-actions" id="worksSubActions">
+                    <div class="view-toggle-pills">
+                      <button class="view-mode-btn active" id="btnListView" title="List View">
+                        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+                          <line x1="8" y1="6" x2="21" y2="6"></line>
+                          <line x1="8" y1="12" x2="21" y2="12"></line>
+                          <line x1="8" y1="18" x2="21" y2="18"></line>
+                          <line x1="3" y1="6" x2="3.01" y2="6"></line>
+                          <line x1="3" y1="12" x2="3.01" y2="12"></line>
+                          <line x1="3" y1="18" x2="3.01" y2="18"></line>
+                        </svg>
+                        <span>List</span>
+                      </button>
+                      <button class="view-mode-btn" id="btnKanbanView" title="Board View">
+                        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+                          <rect x="3" y="3" width="7" height="18" rx="1"></rect>
+                          <rect x="14" y="3" width="7" height="10" rx="1"></rect>
+                        </svg>
+                        <span>Board</span>
+                      </button>
+                    </div>
+
+                    <div class="works-sub-right">
+                      <button class="filter-action-chip" id="taskFilterActionBtn">
+                        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                          <polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"></polygon>
+                        </svg>
+                        <span>Filter</span>
+                      </button>
+                      <button type="button" class="task-search-btn" id="taskSearchBtn" aria-label="Search tasks">
+                        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                          <circle cx="11" cy="11" r="7"></circle>
+                          <line x1="16.5" y1="16.5" x2="21" y2="21"></line>
+                        </svg>
+                      </button>
+                    </div>
+                    <label class="task-search-field">
+                      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                        <circle cx="11" cy="11" r="7"></circle>
+                        <line x1="16.5" y1="16.5" x2="21" y2="21"></line>
+                      </svg>
+                      <input type="search" id="taskSearchInput" placeholder="Search tasks" aria-label="Search tasks" autocomplete="off">
+                      <button type="button" class="task-search-close" id="taskSearchClose" aria-label="Close search">×</button>
+                    </label>
+                  </div>
+                </div>
+
+                <!-- Kanban Board / List Container -->
+                <div class="kanban-board-container list-mode" id="kanbanBoardContainer">
+                  <!-- Dynamically rendered via app.js -->
+                </div>
+
+                <!-- Mobile Quick Add Task Banner Button -->
+                <button class="mobile-add-work-banner-btn" id="mobileAddWorkTaskBtn">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4">
+                    <line x1="12" y1="5" x2="12" y2="19"></line>
+                    <line x1="5" y1="12" x2="19" y2="12"></line>
+                  </svg>
+                  <span>New task</span>
+                </button>
+              </div>
+
+            <!-- ================= SUB-PANEL 2: ATTENDANCE (SUPERVISOR ROLL CHECK) ================= -->
+            <div class="project-tab-view" id="projectAttendancePanel">
+              <!-- Minimal Top Bar: Date Nav + Quick Action -->
+              <div class="attendance-top-bar">
+                <div class="attendance-date-bar">
+                  <button class="date-nav-btn" id="attPrevDayBtn" title="Previous Day">‹</button>
+                  <span class="date-display-text" id="attCurrentDateLabel">Today, Oct 15, 2026</span>
+                  <button class="date-nav-btn" id="attNextDayBtn" title="Next Day">›</button>
+                </div>
+                <button class="mark-all-present-btn" id="markAllPresentBtn" title="Mark entire crew present">
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                    <polyline points="20 6 9 17 4 12"></polyline>
+                  </svg>
+                  <span>Mark all present</span>
+                </button>
+              </div>
+
+              <label class="employee-search">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <circle cx="11" cy="11" r="7"></circle>
+                  <line x1="16.5" y1="16.5" x2="21" y2="21"></line>
+                </svg>
+                <input type="search" id="employeeSearchInput" placeholder="Search employees" aria-label="Search employees" autocomplete="off">
+              </label>
+              <div class="attendance-filter-bar">
+                <div class="filter-pills-row">
+                  <button class="roster-filter-btn active" data-filter="all">All (<span id="filterCountAll">10</span>)</button>
+                  <button class="roster-filter-btn" data-filter="present">Present (<span id="filterCountPresent">7</span>)</button>
+                  <button class="roster-filter-btn" data-filter="half_day">Half day (<span id="filterCountHalfDay">1</span>)</button>
+                  <button class="roster-filter-btn" data-filter="absent">Absent (<span id="filterCountAbsent">2</span>)</button>
+                </div>
+                <button class="add-crew-mini-btn" id="addCrewWorkerBtn" title="Add worker to roster">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="12" y1="5" x2="12" y2="19"></line>
+                    <line x1="5" y1="12" x2="19" y2="12"></line>
+                  </svg>
+                </button>
+              </div>
+
+              <!-- Crew Roster List -->
+              <div class="crew-roster-list" id="crewRosterContainer">
+                <!-- Dynamically populated or rendered -->
+              </div>
+
+              <!-- Supervisor Daily Sign-off -->
+              <div class="supervisor-signoff-box">
+                <div class="signoff-title-row">
+                  <svg class="signoff-shield-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+                  </svg>
+                  <span>Approve today's attendance</span>
+                </div>
+                <p class="signoff-desc">Approving confirms today's hours for payroll.</p>
+                <button class="signoff-action-btn" id="approveAttendanceBtn">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4">
+                    <polyline points="20 6 9 17 4 12"></polyline>
+                  </svg>
+                  <span id="signoffBtnText">Approve attendance</span>
+                </button>
+              </div>
+            </div>
+
+            <!-- ================= SUB-PANEL 3: MEETINGS ================= -->
+            <div class="project-tab-view" id="projectMeetingsPanel">
+              <div class="subview-body" style="padding: 12px 0;">
+                <div class="meetings-view-header">
+                  <button class="meetings-back-btn" id="meetingsBackToWorksBtn" title="Back to Works">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                      <polyline points="15 18 9 12 15 6"></polyline>
+                    </svg>
+                    <span>Back</span>
+                  </button>
+                    <span class="meetings-page-heading">Meetings</span>
+                </div>
+
+                <div class="meeting-hero-banner">
+                  <div class="meeting-hero-info">
+                    <span class="meeting-badge-live">UPCOMING TODAY</span>
+                    <h4 class="meeting-hero-title">Daily Sprint &amp; Site Standup</h4>
+                    <p class="meeting-hero-time">3:30 PM - 4:00 PM · Google Meet</p>
+                  </div>
+                  <button class="join-meet-btn" id="joinMeetingBtn">Join Call</button>
+                </div>
+
+                <div class="meeting-list-group">
+                  <span class="meeting-section-heading">SCHEDULED SESSIONS</span>
+                  <div class="meeting-item-card">
+                    <div class="meeting-icon-box">📹</div>
+                    <div class="meeting-info">
+                      <span class="meeting-name">Table Ping QA sync &amp; defect review</span>
+                      <span class="meeting-meta">Tomorrow at 10:00 AM · RK, MC</span>
+                    </div>
+                  </div>
+                  <div class="meeting-item-card">
+                    <div class="meeting-icon-box">👥</div>
+                    <div class="meeting-info">
+                      <span class="meeting-name">Client Progress Milestone Walkthrough</span>
+                      <span class="meeting-meta">Friday, Oct 18 · Midhun Raj</span>
+                    </div>
+                  </div>
+                </div>
+
+                <button class="add-work-task-btn" id="scheduleMeetingBtn" style="margin-top: 14px;">
+                  <span>Schedule a meeting</span>
+                </button>
+              </div>
+            </div>
+
+            <!-- ================= SUB-PANEL 4: DOCS ================= -->
+            <div class="project-tab-view" id="projectDocumentsPanel">
+              <div class="project-docs">
+                <div class="project-docs-head">
+                  <p class="projects-page-subtitle">Documents and spreadsheets for this project.</p>
+                  <div class="new-snap-wrap">
+                    <button class="snaps-new-btn" id="projectDocsNewBtn" type="button" aria-expanded="false" aria-controls="projectDocsNewMenu">
+                      New document
+                      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                    </button>
+                    <div class="new-snap-menu hidden" id="projectDocsNewMenu">
+                      <button type="button" data-snap-kind="doc">
+                        <span class="new-snap-ico">
+                          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline></svg>
+                        </span>
+                        Document
+                      </button>
+                      <button type="button" data-snap-kind="sheet">
+                        <span class="new-snap-ico">
+                          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"></rect><line x1="3" y1="9" x2="21" y2="9"></line><line x1="3" y1="15" x2="21" y2="15"></line><line x1="9" y1="3" x2="9" y2="21"></line></svg>
+                        </span>
+                        Spreadsheet
+                      </button>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="projects-search-bar">
+                  <svg class="search-lens-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#7A7888" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="11" cy="11" r="8"></circle>
+                    <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                  </svg>
+                  <input type="text" class="projects-search-input" id="projectDocsSearch" placeholder="Search docs" autocomplete="off">
+                </div>
+
+                <div class="snaps-toolbar">
+                  <button class="filter-dropdown-pill" id="projectDocsOwnerBtn" type="button">
+                    <span id="projectDocsOwnerLabel">All owners</span>
+                    <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                  </button>
+                  <button class="filter-dropdown-pill" id="projectDocsSortBtn" type="button">
+                    <span id="projectDocsSortLabel">Recently updated</span>
+                    <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                  </button>
+                </div>
+
+                <div class="snaps-meta-row">
+                  <span class="snaps-count" id="projectDocsCount">0 docs</span>
+                  <div class="snaps-view-toggle">
+                    <button class="snaps-view-btn active" id="projectDocsGridBtn" type="button" title="Grid view" aria-label="Grid view">
+                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect></svg>
+                    </button>
+                    <button class="snaps-view-btn" id="projectDocsListBtn" type="button" title="List view" aria-label="List view">
+                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><line x1="8" y1="6" x2="21" y2="6"></line><line x1="8" y1="12" x2="21" y2="12"></line><line x1="8" y1="18" x2="21" y2="18"></line><line x1="3" y1="6" x2="3.01" y2="6"></line><line x1="3" y1="12" x2="3.01" y2="12"></line><line x1="3" y1="18" x2="3.01" y2="18"></line></svg>
+                    </button>
+                  </div>
+                </div>
+
+                <div class="snaps-grid" id="projectDocsGrid"></div>
+              </div>
+            </div>
+
+            <!-- ================= SUB-PANEL 5: UPLOADS ================= -->
+            <div class="project-tab-view" id="projectUploadsPanel">
+              <div class="subview-body" style="padding: 16px 0;">
+                <!-- Site Progress Photos Log -->
+                <div class="work-photos-card">
+                  <div class="work-photos-header">
+                    <span class="work-photos-title">Uploads</span>
+                    <span class="subview-counter" id="uploadsCounterBadge">3 files</span>
+                  </div>
+                  <div class="work-photos-grid">
+                    <div class="work-photo-thumb" style="background-image: url('https://images.unsplash.com/photo-1541888946425-d0fbb18f15f6?auto=format&amp;fit=crop&amp;w=300&amp;q=80');">
+                      <span class="work-photo-thumb-tag">Architecture</span>
+                    </div>
+                    <div class="work-photo-thumb" style="background-image: url('https://images.unsplash.com/photo-1504307651254-35680f356dfd?auto=format&amp;fit=crop&amp;w=300&amp;q=80');">
+                      <span class="work-photo-thumb-tag">Floor Layout</span>
+                    </div>
+                    <div class="work-photo-thumb" style="background-image: url('https://images.unsplash.com/photo-1581092160607-ee22621dd758?auto=format&amp;fit=crop&amp;w=300&amp;q=80');">
+                      <span class="work-photo-thumb-tag">Server Rack</span>
+                    </div>
+                  </div>
+                  <button class="upload-photo-btn" id="uploadSitePhotoBtn">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                      <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"></path>
+                      <circle cx="12" cy="13" r="4"></circle>
+                    </svg>
+                    <span>Add a photo</span>
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            </div> <!-- End mobile-proj-scroll-body -->
+
+            <!-- ================= SPEED DIAL FAB (MATCHING USER REFERENCE) ================= -->
+            <div class="project-fab-container" id="projectFabContainer">
+              <!-- Backdrop Blur Overlay -->
+              <div class="fab-speed-dial-backdrop" id="fabBackdrop"></div>
+
+              <!-- Speed Dial Actions Menu -->
+              <div class="fab-speed-dial-menu" id="fabSpeedDialMenu">
+                <!-- Action 1: Create Task -->
+                <div class="fab-action-item" id="fabActionTask" data-delay="1">
+                  <span class="fab-action-label">Create Task</span>
+                  <button class="fab-action-circle" title="New task">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                      <polyline points="9 11 12 14 22 4"></polyline>
+                      <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path>
+                    </svg>
+                  </button>
+                </div>
+
+                <!-- Action 2: Schedule Meeting -->
+                <div class="fab-action-item" id="fabActionMeeting" data-delay="2">
+                  <span class="fab-action-label">Meetings</span>
+                  <button class="fab-action-circle" title="Schedule Meeting">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                      <polygon points="23 7 16 12 23 17 23 7"></polygon>
+                      <rect x="1" y="5" width="15" height="14" rx="2" ry="2"></rect>
+                    </svg>
+                  </button>
+                </div>
+
+                <!-- Action 3: Upload Document -->
+                <div class="fab-action-item" id="fabActionDocument" data-delay="3">
+                  <span class="fab-action-label">Uploads</span>
+                  <button class="fab-action-circle" title="Uploads">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                      <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                      <polyline points="14 2 14 8 20 8"></polyline>
+                      <line x1="12" y1="18" x2="12" y2="12"></line>
+                      <line x1="9" y1="15" x2="15" y2="15"></line>
+                    </svg>
+                  </button>
+                </div>
+
+              </div>
+
+              <!-- Primary Floating Action Button (FAB Trigger) -->
+              <button class="project-main-fab-btn" id="projectMainFabBtn" aria-label="Project Quick Actions" title="Quick Actions">
+                <div class="fab-icon-wrapper">
+                  <svg class="fab-icon-plus" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round">
+                    <line x1="12" y1="5" x2="12" y2="19"></line>
+                    <line x1="5" y1="12" x2="19" y2="12"></line>
+                  </svg>
+                  <svg class="fab-icon-close" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round">
+                    <line x1="18" y1="6" x2="6" y2="18"></line>
+                    <line x1="6" y1="6" x2="18" y2="18"></line>
+                  </svg>
+                </div>
+              </button>
+            </div>
+          </section>
+
+          <!-- ==================== SUB-VIEW: TASK DETAIL (MATCHING SNAP WEB TASK VIEW) ==================== -->
+          <section class="sub-view-panel task-detail-panel" id="viewTaskDetail">
+            <!-- Task View Sticky Mobile Top Bar (Exact Match to User Reference) -->
+            <header class="task-detail-header-new">
+              <div class="task-header-bar">
+              <div class="task-header-left">
+                <button class="mobile-icon-btn task-back-btn" id="closeTaskDetailBtn" title="Back" aria-label="Back to tasks">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round">
+                    <polyline points="15 18 9 12 15 6"></polyline>
+                  </svg>
+                </button>
+                <div class="task-header-titles">
+                  <h2 class="task-screen-title" id="taskDetailToken">TASK-000288</h2>
+                  <button class="task-project-link-chip" id="taskProjectLinkBtn" type="button" title="Open project">
+                    <span id="taskProjectNameText">AME Estimation</span>
+                    <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+                      <line x1="7" y1="17" x2="17" y2="7"></line>
+                      <polyline points="7 7 17 7 17 17"></polyline>
+                    </svg>
+                  </button>
+                </div>
+              </div>
+
+              <div class="task-header-right">
+                <!-- More Options Button (...) -->
+                <button class="task-more-btn" id="taskMoreOptionsBtn" title="More options" aria-label="More options">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                    <circle cx="5" cy="12" r="1.7"></circle>
+                    <circle cx="12" cy="12" r="1.7"></circle>
+                    <circle cx="19" cy="12" r="1.7"></circle>
+                  </svg>
+                </button>
+
+                <!-- More Options Floating Menu -->
+                <div class="task-options-menu" id="taskOptionsMenu" style="display: none;">
+                  <button class="task-menu-item" id="menuToggleCompleteBtn">
+                    <span id="menuCompleteIcon">✓</span>
+                    <span id="menuCompleteText">Mark as Complete</span>
+                  </button>
+                  <button class="task-menu-item" id="menuDuplicateTaskBtn">
+                    <span>📄</span>
+                    <span>Duplicate Task</span>
+                  </button>
+                  <button class="task-menu-item text-danger" id="menuDeleteTaskBtn">
+                    <span>🗑</span>
+                    <span>Delete Task</span>
+                  </button>
+                </div>
+              </div>
+              </div>
+
+              <div class="task-tabs-nav-bar" id="taskTabsNavBar" role="tablist">
+                <button class="task-tab-btn active" id="tabBtnDetails" data-task-tab="details" role="tab" aria-selected="true" aria-controls="taskPaneDetails">
+                  <span class="task-tab-label">Details</span>
+                </button>
+                <button class="task-tab-btn" id="tabBtnWork" data-task-tab="work" role="tab" aria-selected="false" aria-controls="taskPaneWork">
+                  <span class="task-tab-label">Work <span id="workTabCounter">0/2</span></span>
+                </button>
+                <button class="task-tab-btn" id="tabBtnUpdates" data-task-tab="updates" role="tab" aria-selected="false" aria-controls="taskPaneUpdates">
+                  <span class="task-tab-label">Updates</span>
+                </button>
+              </div>
+            </header>
+
+            <!-- Scrollable Task View Body -->
+            <div class="task-detail-scroll-body" id="taskDetailScrollBody">
+
+              <div class="task-tab-pane active" id="taskPaneDetails" role="tabpanel" aria-labelledby="tabBtnDetails">
+              <!-- Main Task Title (Uppercase, Bold, matching screenshot) -->
+              <div class="task-hero-title-wrap">
+                <h1 class="task-hero-title" id="taskDetailTitle" contenteditable="true" spellcheck="false" title="Tap to edit title">ANNUAL MAINTENANCE CONTRACT AUTHORITY CHARGES</h1>
+              </div>
+
+              <!-- Quick Status & Property Chips Row (Matching Screenshot) -->
+              <div class="task-quick-chips-row">
+                <!-- Status Chip: ● Not started -->
+                <button class="quick-chip status-quick-chip" id="quickStatusChip" title="Choose status">
+                  <span class="chip-dot dot-slate" id="quickStatusDot">●</span>
+                  <span class="chip-label" id="quickStatusLabel">Not started</span>
+                </button>
+
+                <!-- Due Date Chip: 🕒 Due 31 Oct -->
+                <button class="quick-chip due-quick-chip" id="quickDueChip" title="Click to pick due date">
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="12" cy="12" r="10"></circle>
+                    <polyline points="12 6 12 12 16 14"></polyline>
+                  </svg>
+                  <span class="chip-label" id="quickDueLabel">Due 31 Oct</span>
+                  <input type="date" id="quickDueDateInput" style="position: absolute; opacity: 0; pointer-events: none; width: 0; height: 0;" value="2026-10-31">
+                </button>
+
+                <!-- Priority Chip: ◇ No priority -->
+                <button class="quick-chip priority-quick-chip" id="quickPriorityChip" title="Choose priority">
+                  <span class="chip-icon-diamond" id="quickPriorityIcon">◇</span>
+                  <span class="chip-label" id="quickPriorityLabel">No priority</span>
+                </button>
+
+                <label class="quick-chip" for="taskPropAssigneeSelect">
+                  <span class="prop-avatar-tiny" id="taskAssigneeAvatar">👤</span>
+                  <select class="chip-select" id="taskPropAssigneeSelect" aria-label="Assigned to">
+                    <option value="Unassigned" selected>Unassigned</option>
+                    <option value="RK">RK · Ravi Kumar</option>
+                    <option value="MC">MC · Midhun Raj</option>
+                    <option value="SC">Sarah Chen</option>
+                    <option value="CM">Carlos Mendez</option>
+                    <option value="SP">Samir Patel</option>
+                  </select>
+                </label>
+
+                <button class="quick-chip" id="quickStartChip" type="button" title="Choose a start date">
+                  <span class="chip-label" id="quickStartLabel">Start 13 Oct</span>
+                  <input type="date" id="taskStartDateInput" class="chip-date-input" value="2026-10-13" aria-label="Start date">
+                </button>
+
+                <span class="quick-chip is-static">Created <span id="taskCreatedDate">13 Oct</span></span>
+                <span class="quick-chip is-static">Updated <span id="taskUpdatedDate">13 Oct</span></span>
+                <div class="labels-container chip-labels" id="taskLabelsContainer">
+                  <span class="label-pill">Authority</span>
+                  <span class="label-pill">Estimation</span>
+                  <button class="add-label-btn" id="taskAddLabelBtn" type="button">Add label</button>
+                </div>
+              </div>
+
+              <!-- Dedicated Description Section ("also consider the description") -->
+              <div class="task-description-card-block">
+                <div class="description-header-row">
+                  <div class="desc-header-left">
+                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+                      <line x1="3" y1="6" x2="21" y2="6"></line>
+                      <line x1="3" y1="12" x2="21" y2="12"></line>
+                      <line x1="3" y1="18" x2="15" y2="18"></line>
+                    </svg>
+                    <span class="desc-heading-label">Description</span>
+                  </div>
+                  <span class="desc-edit-hint" id="descSaveHint">Auto-saved</span>
+                </div>
+                <div class="desc-content-wrapper">
+                  <textarea class="task-rich-desc-input" id="taskDetailDesc" placeholder="Add a description" rows="3">Statutory authority charges and compliance tariffs for annual electrical, mechanical, and HVAC maintenance contract estimation. Reviewed against municipal civic council schedules.</textarea>
+                </div>
+              </div>
+
+              <!-- Comment Section Directly Under Description (Matches uploaded UI screenshot) -->
+              <div class="task-under-desc-comments-block" id="taskUnderDescComments">
+                <div class="thread-comments-list" id="threadCommentsList">
+
+                  <!-- Thread Item 1 (First Comment): Test comment with Show 3 replies -->
+                  <div class="thread-item-wrapper has-thread-line">
+                    <div class="thread-avatar-col">
+                      <div class="thread-avatar-circle">M</div>
+                      <div class="thread-connector-line"></div>
+                    </div>
+                    <div class="thread-content-col">
+                      <div class="thread-header-row">
+                        <div class="thread-author-meta">
+                          <span class="thread-author-name">Midhun C K</span>
+                          <span class="thread-time-tag">2m</span>
+                        </div>
+                        <div class="thread-action-pill">
+                          <button class="thread-act-btn thread-react-btn" title="Add reaction">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                              <circle cx="12" cy="12" r="10"></circle>
+                              <path d="M8 14s1.5 2 4 2 4-2 4-2"></path>
+                              <line x1="9" y1="9" x2="9.01" y2="9"></line>
+                              <line x1="15" y1="9" x2="15.01" y2="9"></line>
+                              <line x1="19" y1="5" x2="19" y2="9"></line>
+                              <line x1="17" y1="7" x2="21" y2="7"></line>
+                            </svg>
+                          </button>
+                          <button class="thread-act-btn thread-resolve-btn" title="Resolve comment">
+                            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                              <polyline points="20 6 9 17 4 12"></polyline>
+                            </svg>
+                          </button>
+                          <button class="thread-act-btn thread-more-btn" title="More options">
+                            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                              <circle cx="12" cy="12" r="1"></circle>
+                              <circle cx="19" cy="12" r="1"></circle>
+                              <circle cx="5" cy="12" r="1"></circle>
+                            </svg>
+                          </button>
+                        </div>
+                      </div>
+                      <div class="thread-body-text">Test comment</div>
+                      <button class="thread-replies-toggle-btn" id="threadRepliesToggleBtn">
+                        <span id="threadRepliesToggleText">Show 3 replies</span>
+                      </button>
+                      <div class="thread-nested-replies" id="threadNestedReplies" style="display: none;">
+                        <div class="nested-reply-item">
+                          <div class="nested-avatar">MC</div>
+                          <div class="nested-content">
+                            <div class="nested-author">Midhun C K <span class="nested-time">1m</span></div>
+                            <div class="nested-text">Checked with authority specifications.</div>
+                          </div>
+                        </div>
+                        <div class="nested-reply-item">
+                          <div class="nested-avatar">RK</div>
+                          <div class="nested-content">
+                            <div class="nested-author">Ravi Kumar <span class="nested-time">1m</span></div>
+                            <div class="nested-text">Annexure charges included in estimation.</div>
+                          </div>
+                        </div>
+                        <div class="nested-reply-item">
+                          <div class="nested-avatar">MC</div>
+                          <div class="nested-content">
+                            <div class="nested-author">Midhun C K <span class="nested-time">Just now</span></div>
+                            <div class="nested-text">Ready for supervisor review.</div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- Click to Show All Toggle Row -->
+                  <div class="thread-show-all-row" id="threadShowAllRow">
+                    <button class="thread-show-all-btn" id="threadShowAllBtn">
+                      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                        <polyline points="6 9 12 15 18 9"></polyline>
+                      </svg>
+                      <span id="threadShowAllText">Show all</span>
+                    </button>
+                  </div>
+
+                  <!-- Collapsed Middle Comments Container (Hidden by default, shown on "Show all") -->
+                  <div class="thread-middle-comments" id="threadMiddleComments" style="display: none;">
+                    <!-- Thread Item 2: Hgggs -->
+                    <div class="thread-item-wrapper">
+                      <div class="thread-avatar-col">
+                        <div class="thread-avatar-circle">M</div>
+                      </div>
+                      <div class="thread-content-col">
+                        <div class="thread-header-row">
+                          <div class="thread-author-meta">
+                            <span class="thread-author-name">Midhun C K</span>
+                            <span class="thread-time-tag">Just now</span>
+                          </div>
+                          <div class="thread-action-pill">
+                            <button class="thread-act-btn thread-react-btn" title="Add reaction">
+                              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <circle cx="12" cy="12" r="10"></circle>
+                                <path d="M8 14s1.5 2 4 2 4-2 4-2"></path>
+                                <line x1="9" y1="9" x2="9.01" y2="9"></line>
+                                <line x1="15" y1="9" x2="15.01" y2="9"></line>
+                                <line x1="19" y1="5" x2="19" y2="9"></line>
+                                <line x1="17" y1="7" x2="21" y2="7"></line>
+                              </svg>
+                            </button>
+                            <button class="thread-act-btn thread-more-btn" title="More options">
+                              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                                <circle cx="12" cy="12" r="1"></circle>
+                                <circle cx="19" cy="12" r="1"></circle>
+                                <circle cx="5" cy="12" r="1"></circle>
+                              </svg>
+                            </button>
+                          </div>
+                        </div>
+                        <div class="thread-body-text">Hgggs</div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- Thread Item 3 (Last Comment): ttf -->
+                  <div class="thread-item-wrapper" id="threadLastComment">
+                    <div class="thread-avatar-col">
+                      <div class="thread-avatar-circle">M</div>
+                    </div>
+                    <div class="thread-content-col">
+                      <div class="thread-header-row">
+                        <div class="thread-author-meta">
+                          <span class="thread-author-name">Midhun C K</span>
+                          <span class="thread-time-tag">Just now</span>
+                        </div>
+                        <div class="thread-action-pill">
+                          <button class="thread-act-btn thread-react-btn" title="Add reaction">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                              <circle cx="12" cy="12" r="10"></circle>
+                              <path d="M8 14s1.5 2 4 2 4-2 4-2"></path>
+                              <line x1="9" y1="9" x2="9.01" y2="9"></line>
+                              <line x1="15" y1="9" x2="15.01" y2="9"></line>
+                              <line x1="19" y1="5" x2="19" y2="9"></line>
+                              <line x1="17" y1="7" x2="21" y2="7"></line>
+                            </svg>
+                          </button>
+                          <button class="thread-act-btn thread-more-btn" title="More options">
+                            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                              <circle cx="12" cy="12" r="1"></circle>
+                              <circle cx="19" cy="12" r="1"></circle>
+                              <circle cx="5" cy="12" r="1"></circle>
+                            </svg>
+                          </button>
+                        </div>
+                      </div>
+                      <div class="thread-body-text">ttf</div>
+                    </div>
+                  </div>
+
+                </div> <!-- End thread-comments-list -->
+
+                <!-- Quick Add Comment Input Row (matches bottom row in screenshot) -->
+                <div class="thread-quick-input-row" id="threadQuickInputRow">
+                  <div class="thread-avatar-circle mini">M</div>
+                  <div class="thread-input-field-wrap">
+                    <input type="text" class="thread-inline-input" id="threadInlineInput" placeholder="Add a comment..." spellcheck="false" autocomplete="off">
+                    <button class="thread-send-mini-btn" id="threadSendMiniBtn" title="Post comment">
+                      <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"></path>
+                      </svg>
+                    </button>
+                  </div>
+                </div>
+              </div>
+              </div>
+
+              <div class="task-tab-pane" id="taskPaneWork" role="tabpanel" aria-labelledby="tabBtnWork">
+                <div class="task-work-highlight" id="taskWorkBlock">
+                  <div class="task-section-block" id="taskChecklistsSection">
+                    <div class="task-section-header">
+                      <div class="section-title-wrap">
+                        <h3 class="task-section-title">Checklists</h3>
+                        <span class="checklist-progress-text" id="checklistGlobalProgress">0/2</span>
+                      </div>
+                      <button class="add-section-action-btn" id="addNewChecklistGroupBtn">
+                        + New checklist
+                      </button>
+                    </div>
+                    <div class="checklists-container" id="taskChecklistsContainer"></div>
+                  </div>
+
+                  <div class="task-section-block" id="taskSubtasksSection">
+                    <div class="task-section-header">
+                      <div class="section-title-wrap">
+                        <h3 class="task-section-title">Subtasks</h3>
+                        <span class="subtasks-count-badge" id="subtasksCountBadge">0</span>
+                      </div>
+                      <button class="add-section-action-btn" id="addNewSubtaskBtn">+ Add</button>
+                    </div>
+                    <div class="subtasks-list" id="taskSubtasksContainer"></div>
+                  </div>
+                </div>
+
+                <div class="task-section-block" id="taskCustomFieldsSection">
+                  <div class="task-section-header">
+                    <div class="section-title-wrap">
+                      <h3 class="task-section-title">Capture form</h3>
+                      <span class="fields-count-badge" id="customFieldsCountBadge">5</span>
+                    </div>
+                    <div class="section-header-actions">
+                      <button class="manage-fields-btn" id="openManageFieldsBtn" title="Manage capture fields">
+                        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+                          <path d="M12 15a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"></path>
+                          <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 1 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 1 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 1 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 1 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
+                        </svg>
+                        <span>Manage</span>
+                      </button>
+                    </div>
+                  </div>
+                  <p class="field-capture-hint" id="fieldCaptureHint" hidden></p>
+                  <div class="field-capture-list" id="taskCustomFieldsContainer"></div>
+                </div>
+              </div>
+
+              <!-- ================= TAB PANE 3: UPDATES ================= -->
+              <div class="task-tab-pane" id="taskPaneUpdates" role="tabpanel" aria-labelledby="tabBtnUpdates">
+
+                <!-- Files Section -->
+                <div class="task-section-block" id="taskFilesSection">
+                  <div class="task-section-header">
+                    <h3 class="task-section-title">Attachments</h3>
+                    <button class="add-section-action-btn" id="uploadFileBtn">+ Upload</button>
+                  </div>
+
+                  <!-- Dropzone (matches screenshot) -->
+                  <div class="files-dropzone" id="filesDropzone">
+                    <div class="dropzone-icon">📎</div>
+                    <div class="dropzone-text">Drop files here</div>
+                    <div class="dropzone-sub">or click to upload · Ctrl+V to paste · max 25 MB each</div>
+                    <input type="file" id="taskFileInput" multiple style="display: none;">
+                  </div>
+
+                  <div class="task-files-list" id="taskFilesListContainer">
+                    <!-- Dynamic Files List -->
+                  </div>
+                </div>
+
+                <!-- Activity Section -->
+                <div class="task-section-block" id="taskActivitySection">
+                  <button class="activity-accordion-btn" id="taskActivityToggleBtn">
+                    <div class="activity-btn-left">
+                      <span class="task-section-title">Activity</span>
+                      <span class="activity-badge" id="taskActivityCountBadge">1</span>
+                    </div>
+                    <svg class="chevron-activity" id="activityChevron" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4">
+                      <polyline points="6 9 12 15 18 9"></polyline>
+                    </svg>
+                  </button>
+
+                  <div class="activity-timeline-content" id="taskActivityTimeline">
+                    <!-- Activity items -->
+                  </div>
+                </div>
+
+                <!-- Footer / Delete Task -->
+                <div class="task-detail-footer">
+                  <button class="delete-task-outline-btn" id="deleteTaskDetailBtn">
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+                      <polyline points="3 6 5 6 21 6"></polyline>
+                      <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+                    </svg>
+                    <span>Delete task</span>
+                  </button>
+                </div>
+
+              </div> <!-- End task-tab-pane #taskPaneUpdates -->
+
+            </div> <!-- End task-detail-scroll-body -->
+          </section>
+
+        </div> <!-- End screen-scroll-container -->
+
+
+
+        <!-- Home Bar Indicator -->
+        <div class="home-indicator"></div>
+
+        <!-- ==================== NAVIGATION DRAWER (IMAGE 2: SPACES & TEAMSPACES) ==================== -->
+        <div class="drawer-overlay" id="drawerOverlay" aria-label="Close navigation drawer"></div>
+
+        <aside class="side-drawer" id="sideDrawer" aria-label="Spaces Navigation Drawer">
+          <!-- Drawer Top Header -->
+          <div class="drawer-header">
+            <div class="drawer-header-left">
+              <span class="drawer-brand-logo">
+                <img src="snap-logo.png" alt="snap logo" class="drawer-logo-img">
+              </span>
+              <div>
+                <h3 class="drawer-header-title">snap</h3>
+                <span class="drawer-header-meta">From Notes to Action</span>
+              </div>
+            </div>
+            <button class="drawer-close-btn" id="closeDrawerBtn" aria-label="Close Drawer">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="18" y1="6" x2="6" y2="18"></line>
+                <line x1="6" y1="6" x2="18" y2="18"></line>
+              </svg>
+            </button>
+          </div>
+
+          <!-- Drawer Body Scrollable Content -->
+          <div class="drawer-body-scroll">
+
+            <!-- Search Box (from Image 2) -->
+            <div class="spaces-search-box">
+              <svg class="search-lens-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#7A7888" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="11" cy="11" r="8"></circle>
+                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+              </svg>
+              <input type="text" class="spaces-search-input" id="spacesSearchInput" placeholder="Search spaces and projects" autocomplete="off">
+              <button class="search-clear-btn hidden" id="clearSpacesSearchBtn" title="Clear search">✕</button>
+            </div>
+
+            <div class="drawer-people">
+              <span class="section-heading-text">PEOPLE</span>
+              <button type="button" class="drawer-people-row" id="drawerEmployeesItem">
+                <span class="drawer-people-icon" aria-hidden="true">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                    <circle cx="12" cy="7" r="4"></circle>
+                  </svg>
+                </span>
+                <span class="drawer-people-title">Employees</span>
+                <span class="drawer-people-meta">24 active</span>
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                  <polyline points="9 18 15 12 9 6"></polyline>
+                </svg>
+              </button>
+            </div>
+
+            <!-- Section: TEAMSPACES (from Image 2) -->
+            <div class="spaces-section-header">
+              <span class="section-heading-text">TEAMSPACES</span>
+              <div class="section-heading-actions">
+                <button class="icon-tiny-btn" id="toggleTeamspacesSection" title="Toggle section">
+                  <svg class="chevron-rotatable expanded" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                    <polyline points="6 9 12 15 18 9"></polyline>
+                  </svg>
+                </button>
+                <label class="mini-toggle-switch">
+                  <input type="checkbox" checked id="teamspacesToggle">
+                  <span class="mini-toggle-slider"></span>
+                </label>
+              </div>
+            </div>
+
+            <!-- Tree List (from Image 2) -->
+            <div class="teamspaces-tree-list" id="teamspacesTreeList">
+
+              <!-- Group 1: Test Teamspace (Open by default) -->
+              <div class="tree-group open" id="groupTestTeamspace">
+                <div class="tree-parent-row" data-group="Test Teamspace">
+                  <div class="tree-parent-left">
+                    <div class="tree-icon-badge">
+                      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#151A2D" stroke-width="2.2" stroke-linecap="round">
+                        <circle cx="12" cy="12" r="4"></circle>
+                        <line x1="12" y1="2" x2="12" y2="4"></line>
+                        <line x1="12" y1="20" x2="12" y2="22"></line>
+                        <line x1="4.93" y1="4.93" x2="6.34" y2="6.34"></line>
+                        <line x1="17.66" y1="17.66" x2="19.07" y2="19.07"></line>
+                        <line x1="2" y1="12" x2="4" y2="12"></line>
+                        <line x1="20" y1="12" x2="22" y2="12"></line>
+                        <line x1="4.93" y1="19.07" x2="6.34" y2="17.66"></line>
+                        <line x1="17.66" y1="6.34" x2="19.07" y2="4.93"></line>
+                      </svg>
+                    </div>
+                    <span class="tree-parent-title">Test Teamspace</span>
+                  </div>
+                  <div class="tree-parent-right">
+                    <button class="tree-collapse-btn" title="Collapse/Expand">
+                      <svg class="chevron-rotatable expanded" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#5B6278" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+                        <polyline points="6 9 12 15 18 9"></polyline>
+                      </svg>
+                    </button>
+                    <button class="tree-dots-btn" data-name="Test Teamspace" title="More options">
+                      <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+                        <circle cx="5" cy="12" r="1.8"></circle>
+                        <circle cx="12" cy="12" r="1.8"></circle>
+                        <circle cx="19" cy="12" r="1.8"></circle>
+                      </svg>
+                    </button>
+                  </div>
+                </div>
+
+                <!-- Children of Test Teamspace -->
+                <div class="tree-children-container">
+                  <!-- Sub 1: AME Estimation (Active Gray Pill as in Image 2) -->
+                  <div class="tree-child-row active-space-pill" data-space="AME Estimation" data-parent="Test Teamspace">
+                    <div class="tree-child-left">
+                      <span class="tree-folder-icon">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#1E5BF6" stroke-width="2">
+                          <path d="M4 4h4l2 2h10a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2z"></path>
+                          <line x1="8" y1="11" x2="8" y2="15"></line>
+                          <line x1="12" y1="10" x2="12" y2="15"></line>
+                          <line x1="16" y1="12" x2="16" y2="15"></line>
+                        </svg>
+                      </span>
+                      <span class="tree-child-title">AME Estimation</span>
+                    </div>
+                    <button class="tree-dots-btn" data-name="AME Estimation" title="Options">
+                      <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+                        <circle cx="5" cy="12" r="1.8"></circle>
+                        <circle cx="12" cy="12" r="1.8"></circle>
+                        <circle cx="19" cy="12" r="1.8"></circle>
+                      </svg>
+                    </button>
+                  </div>
+
+                  <!-- Sub 2: Development Testing -->
+                  <div class="tree-child-row" data-space="Development Testing" data-parent="Test Teamspace">
+                    <div class="tree-child-left">
+                      <span class="tree-folder-icon">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#1E5BF6" stroke-width="2">
+                          <path d="M4 4h4l2 2h10a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2z"></path>
+                          <line x1="8" y1="11" x2="8" y2="15"></line>
+                          <line x1="12" y1="10" x2="12" y2="15"></line>
+                          <line x1="16" y1="12" x2="16" y2="15"></line>
+                        </svg>
+                      </span>
+                      <span class="tree-child-title">Development Testing</span>
+                    </div>
+                    <button class="tree-dots-btn" data-name="Development Testing" title="Options">
+                      <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+                        <circle cx="5" cy="12" r="1.8"></circle>
+                        <circle cx="12" cy="12" r="1.8"></circle>
+                        <circle cx="19" cy="12" r="1.8"></circle>
+                      </svg>
+                    </button>
+                  </div>
+
+                  <!-- Sub 3: Fitout work -->
+                  <div class="tree-child-row" data-space="Fitout work" data-parent="Test Teamspace">
+                    <div class="tree-child-left">
+                      <span class="tree-folder-icon">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#1E5BF6" stroke-width="2">
+                          <path d="M4 4h4l2 2h10a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2z"></path>
+                          <line x1="8" y1="11" x2="8" y2="15"></line>
+                          <line x1="12" y1="10" x2="12" y2="15"></line>
+                          <line x1="16" y1="12" x2="16" y2="15"></line>
+                        </svg>
+                      </span>
+                      <span class="tree-child-title">Fitout work</span>
+                    </div>
+                    <button class="tree-dots-btn" data-name="Fitout work" title="Options">
+                      <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+                        <circle cx="5" cy="12" r="1.8"></circle>
+                        <circle cx="12" cy="12" r="1.8"></circle>
+                        <circle cx="19" cy="12" r="1.8"></circle>
+                      </svg>
+                    </button>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Group 2: Products -->
+              <div class="tree-group" id="groupProducts">
+                <div class="tree-parent-row" data-group="Products">
+                  <div class="tree-parent-left">
+                    <div class="tree-icon-badge">
+                      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#151A2D" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <rect x="5" y="3" width="14" height="18" rx="3"></rect>
+                        <line x1="9" y1="3" x2="9" y2="21"></line>
+                        <line x1="13" y1="7" x2="15" y2="7"></line>
+                        <line x1="13" y1="11" x2="15" y2="11"></line>
+                        <line x1="13" y1="15" x2="15" y2="15"></line>
+                      </svg>
+                    </div>
+                    <span class="tree-parent-title">Products</span>
+                  </div>
+                  <div class="tree-parent-right">
+                    <button class="tree-collapse-btn" title="Collapse/Expand">
+                      <svg class="chevron-rotatable" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#5B6278" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+                        <polyline points="6 9 12 15 18 9"></polyline>
+                      </svg>
+                    </button>
+                    <button class="tree-dots-btn" data-name="Products" title="More options">
+                      <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+                        <circle cx="5" cy="12" r="1.8"></circle>
+                        <circle cx="12" cy="12" r="1.8"></circle>
+                        <circle cx="19" cy="12" r="1.8"></circle>
+                      </svg>
+                    </button>
+                  </div>
+                </div>
+                <!-- Collapsed Children -->
+                <div class="tree-children-container collapsed">
+                  <div class="tree-child-row" data-space="garage360 support" data-parent="Products">
+                    <div class="tree-child-left">
+                      <span class="tree-folder-icon">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#1E5BF6" stroke-width="2"><path d="M4 4h4l2 2h10a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2z"></path></svg>
+                      </span>
+                      <span class="tree-child-title">garage360 support</span>
+                    </div>
+                    <button class="tree-dots-btn" data-name="garage360 support"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><circle cx="5" cy="12" r="1.8"></circle><circle cx="12" cy="12" r="1.8"></circle><circle cx="19" cy="12" r="1.8"></circle></svg></button>
+                  </div>
+                  <div class="tree-child-row" data-space="Table Ping" data-parent="Products">
+                    <div class="tree-child-left">
+                      <span class="tree-folder-icon">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#1E5BF6" stroke-width="2"><path d="M4 4h4l2 2h10a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2z"></path></svg>
+                      </span>
+                      <span class="tree-child-title">Table Ping</span>
+                    </div>
+                    <button class="tree-dots-btn" data-name="Table Ping"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><circle cx="5" cy="12" r="1.8"></circle><circle cx="12" cy="12" r="1.8"></circle><circle cx="19" cy="12" r="1.8"></circle></svg></button>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Group 3: CR Testing -->
+              <div class="tree-group" id="groupCRTesting">
+                <div class="tree-parent-row" data-group="CR Testing">
+                  <div class="tree-parent-left">
+                    <div class="tree-icon-badge">
+                      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#151A2D" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <rect x="4" y="8" width="16" height="13" rx="3"></rect>
+                        <path d="M8 8V6a4 4 0 0 1 8 0v2"></path>
+                        <line x1="10" y1="12" x2="10" y2="16"></line>
+                        <line x1="14" y1="12" x2="14" y2="16"></line>
+                      </svg>
+                    </div>
+                    <span class="tree-parent-title">CR Testing</span>
+                  </div>
+                  <div class="tree-parent-right">
+                    <button class="tree-collapse-btn" title="Collapse/Expand">
+                      <svg class="chevron-rotatable" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#5B6278" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+                        <polyline points="6 9 12 15 18 9"></polyline>
+                      </svg>
+                    </button>
+                    <button class="tree-dots-btn" data-name="CR Testing" title="More options">
+                      <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+                        <circle cx="5" cy="12" r="1.8"></circle>
+                        <circle cx="12" cy="12" r="1.8"></circle>
+                        <circle cx="19" cy="12" r="1.8"></circle>
+                      </svg>
+                    </button>
+                  </div>
+                </div>
+                <!-- Collapsed Children -->
+                <div class="tree-children-container collapsed">
+                  <div class="tree-child-row" data-space="Table Ping" data-parent="CR Testing">
+                    <div class="tree-child-left">
+                      <span class="tree-folder-icon">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#1E5BF6" stroke-width="2"><path d="M4 4h4l2 2h10a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2z"></path></svg>
+                      </span>
+                      <span class="tree-child-title">Table Ping</span>
+                    </div>
+                    <button class="tree-dots-btn" data-name="Table Ping"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><circle cx="5" cy="12" r="1.8"></circle><circle cx="12" cy="12" r="1.8"></circle><circle cx="19" cy="12" r="1.8"></circle></svg></button>
+                  </div>
+                  <div class="tree-child-row" data-space="Testing the CR field" data-parent="CR Testing">
+                    <div class="tree-child-left">
+                      <span class="tree-folder-icon">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#1E5BF6" stroke-width="2"><path d="M4 4h4l2 2h10a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2z"></path></svg>
+                      </span>
+                      <span class="tree-child-title">Testing the CR field</span>
+                    </div>
+                    <button class="tree-dots-btn" data-name="Testing the CR field"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><circle cx="5" cy="12" r="1.8"></circle><circle cx="12" cy="12" r="1.8"></circle><circle cx="19" cy="12" r="1.8"></circle></svg></button>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Group 4: IT Department -->
+              <div class="tree-group" id="groupITDepartment">
+                <div class="tree-parent-row" data-group="IT Department">
+                  <div class="tree-parent-left">
+                    <div class="tree-icon-badge">
+                      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#1E5BF6" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M3 10l9-7 9 7v10a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                        <polyline points="9 22 9 12 15 12 15 22"></polyline>
+                      </svg>
+                    </div>
+                    <span class="tree-parent-title">IT Department</span>
+                  </div>
+                  <div class="tree-parent-right">
+                    <button class="tree-collapse-btn" title="Collapse/Expand">
+                      <svg class="chevron-rotatable" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#5B6278" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+                        <polyline points="6 9 12 15 18 9"></polyline>
+                      </svg>
+                    </button>
+                    <button class="tree-dots-btn" data-name="IT Department" title="More options">
+                      <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+                        <circle cx="5" cy="12" r="1.8"></circle>
+                        <circle cx="12" cy="12" r="1.8"></circle>
+                        <circle cx="19" cy="12" r="1.8"></circle>
+                      </svg>
+                    </button>
+                  </div>
+                </div>
+                <!-- Collapsed Children -->
+                <div class="tree-children-container collapsed">
+                  <div class="tree-child-row" data-space="IT Operations" data-parent="IT Department">
+                    <div class="tree-child-left">
+                      <span class="tree-folder-icon">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#1E5BF6" stroke-width="2"><path d="M4 4h4l2 2h10a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2z"></path></svg>
+                      </span>
+                      <span class="tree-child-title">IT Operations</span>
+                    </div>
+                    <button class="tree-dots-btn" data-name="IT Operations"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><circle cx="5" cy="12" r="1.8"></circle><circle cx="12" cy="12" r="1.8"></circle><circle cx="19" cy="12" r="1.8"></circle></svg></button>
+                  </div>
+                  <div class="tree-child-row" data-space="IT Service Requests" data-parent="IT Department">
+                    <div class="tree-child-left">
+                      <span class="tree-folder-icon">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#1E5BF6" stroke-width="2"><path d="M4 4h4l2 2h10a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2z"></path></svg>
+                      </span>
+                      <span class="tree-child-title">IT Service Requests</span>
+                    </div>
+                    <button class="tree-dots-btn" data-name="IT Service Requests"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><circle cx="5" cy="12" r="1.8"></circle><circle cx="12" cy="12" r="1.8"></circle><circle cx="19" cy="12" r="1.8"></circle></svg></button>
+                  </div>
+                </div>
+              </div>
+
+            </div> <!-- End teamspaces-tree-list -->
+
+          </div> <!-- End drawer-body-scroll -->
+
+          <!-- Drawer Footer -->
+          <div class="drawer-footer">
+            <button class="drawer-add-space-btn" id="drawerAddSpaceBtn">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="12" y1="5" x2="12" y2="19"></line>
+                <line x1="5" y1="12" x2="19" y2="12"></line>
+              </svg>
+              <span>New space</span>
+            </button>
+          </div>
+        </aside>
+
+        <!-- Site check-in picker (inside phone so home check-in works) -->
+        <div class="modal-backdrop" id="arriveSiteModal">
+          <div class="bottom-sheet">
+            <div class="sheet-handle"></div>
+            <div class="sheet-header">
+              <div class="sheet-title-group">
+                <span class="sheet-eyebrow">Check-in</span>
+                <h3 class="sheet-title">Choose a site</h3>
+              </div>
+              <button class="close-sheet-btn" id="closeArriveModalBtn" aria-label="Close">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+                  <line x1="18" y1="6" x2="6" y2="18"></line>
+                  <line x1="6" y1="6" x2="18" y2="18"></line>
+                </svg>
+              </button>
+            </div>
+            <div class="sheet-body">
+              <p class="sheet-instruction">Sites within 500 m can be opened.</p>
+              <div class="site-selection-list" id="siteSelectionOptions"></div>
+              <div class="arrival-actions-box">
+                <div class="quick-check-row">
+                  <div class="check-title">
+                    <strong>Crew count</strong>
+                    <span id="crewRollSummary">14 of 16 present today</span>
+                  </div>
+                  <div class="stepper-controls">
+                    <button class="step-btn" id="stepMinusBtn">-</button>
+                    <span class="step-count" id="crewCountDisplay">14</span>
+                    <button class="step-btn" id="stepPlusBtn">+</button>
+                  </div>
+                </div>
+                <div class="photo-upload-row">
+                  <div class="photo-preview-slot" id="sitePhotoSlot">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+                      <rect x="3" y="3" width="18" height="18" rx="3"></rect>
+                      <circle cx="8.5" cy="8.5" r="1.5"></circle>
+                      <polyline points="21 15 16 10 5 21"></polyline>
+                    </svg>
+                    <span>Add Arrival Photo</span>
+                  </div>
+                  <button class="photo-action-btn" id="simulatePhotoSnap">Add photo</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Geo-fence check-in gate (inside phone so overlay can't freeze the page) -->
+        <div class="modal-backdrop" id="geoCheckInModal">
+          <div class="bottom-sheet geo-checkin-sheet">
+            <div class="sheet-handle"></div>
+            <div class="sheet-header">
+              <div>
+                <span class="sheet-eyebrow">Site boundary</span>
+                <h3 class="sheet-title" id="geoGateProjectName">Fitout work</h3>
+              </div>
+              <button class="close-sheet-btn" id="closeGeoCheckInModalBtn" aria-label="Close">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+                  <line x1="18" y1="6" x2="6" y2="18"></line>
+                  <line x1="6" y1="6" x2="18" y2="18"></line>
+                </svg>
+              </button>
+            </div>
+
+            <div class="sheet-body">
+              <p class="sheet-instruction">Check in at this site before the project can open.</p>
+
+              <div class="geo-gate-meta-card">
+                <div class="geo-gate-meta-row">
+                  <span class="geo-meta-label">Site address</span>
+                  <span class="geo-meta-value" id="geoGateAddress">12 Harbour Yard, Site Gate A</span>
+                </div>
+                <div class="geo-gate-meta-row">
+                  <span class="geo-meta-label">Distance</span>
+                  <span class="geo-meta-value" id="geoGateRadius">150 m</span>
+                </div>
+              </div>
+
+              <div class="geo-gate-status-banner" id="geoGateStatusBanner">
+                <div class="geo-status-pulse"></div>
+                <div>
+                  <strong id="geoGateStatus">At the site</strong>
+                  <p id="geoGateStatusDesc">You can check in and open this project.</p>
+                </div>
+              </div>
+
+              <button type="button" class="secondary-outline-btn full-width" id="simulateGeoEnterBtn">Demo: leave the site</button>
+
+              <button type="button" class="primary-pill-btn full-width" id="confirmGeoCheckInBtn">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+                  <path d="M12 21C16 16.5 19 13 19 9A7 7 0 0 0 5 9c0 4 3 7.5 7 12z"></path>
+                  <circle cx="12" cy="9" r="2.5"></circle>
+                </svg>
+                <span>Check in and open</span>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <div class="modal-backdrop" id="snapBlockModal">
+          <div class="bottom-sheet snap-block-sheet">
+            <div class="snap-block-search">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#94A3B8" stroke-width="2.2"><circle cx="11" cy="11" r="7"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+              <input type="search" id="snapBlockSearch" placeholder="Search blocks..." autocomplete="off">
+              <button type="button" class="snap-block-close" id="closeSnapBlockBtn" aria-label="Close">×</button>
+            </div>
+            <div class="snap-block-list" id="snapBlockList"></div>
+          </div>
+        </div>
+
+        <div class="modal-backdrop" id="snapTaskModal">
+          <div class="bottom-sheet snap-task-sheet">
+            <div class="snap-task-head">
+              <button type="button" class="snap-task-project" id="snapTaskProjectBtn">
+                <span class="snap-task-rocket" aria-hidden="true">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 15c-1.5 1.5-2 5-2 5s3.5-.5 5-2"></path><path d="M9 11l4 4"></path><path d="M14 4l6 6-7 7H7v-6z"></path></svg>
+                </span>
+                <span id="snapTaskProjectLabel">Table Ping / Not started</span>
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6"><polyline points="6 9 12 15 18 9"></polyline></svg>
+              </button>
+              <button type="button" class="snap-task-x" id="closeSnapTaskBtn" aria-label="Close">×</button>
+            </div>
+            <div class="snap-task-picker hidden" id="snapTaskProjectList"></div>
+            <label class="snap-task-label" for="snapTaskTitle">Task title</label>
+            <input class="snap-task-title" id="snapTaskTitle" type="text" placeholder="Task title">
+            <div class="snap-task-pills">
+              <button type="button" class="snap-task-pill" id="snapTaskDueBtn">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="5" width="18" height="16" rx="2"></rect><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+                <span id="snapTaskDueLabel">Due date</span>
+              </button>
+              <input type="date" id="snapTaskDue" class="snap-task-date" tabindex="-1" aria-label="Due date">
+              <button type="button" class="snap-task-pill" id="snapTaskAssigneeBtn">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="3"></circle><path d="M5 19c1.5-3 4-4.5 7-4.5S17.5 16 19 19"></path></svg>
+                <span id="snapTaskAssigneeLabel">Unassigned</span>
+              </button>
+            </div>
+            <button type="button" class="snap-task-create" id="snapTaskCreateBtn">Create task</button>
+            <button type="button" class="snap-task-link" id="snapTaskLinkBtn">Link an existing task</button>
+            <div class="snap-task-existing hidden" id="snapTaskExisting"></div>
+          </div>
+        </div>
+
+      <!-- New task -->
+      <div class="modal-backdrop" id="addTaskModal">
+        <div class="bottom-sheet">
+          <div class="sheet-handle"></div>
+          <div class="sheet-header">
+            <h3 class="sheet-title">New task</h3>
+            <button class="close-sheet-btn" id="closeAddTaskModalBtn" type="button" aria-label="Close">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+                <line x1="18" y1="6" x2="6" y2="18"></line>
+                <line x1="6" y1="6" x2="18" y2="18"></line>
+              </svg>
+            </button>
+          </div>
+          <form class="sheet-form new-task-sheet" id="newTaskForm">
+            <div class="form-group">
+              <label for="taskTitleInput">Title</label>
+              <input type="text" id="taskTitleInput" placeholder="Task title" required>
+            </div>
+            <div class="new-task-chips">
+              <label class="quick-chip" for="newTaskStatus">
+                <span class="chip-dot dot-slate">●</span>
+                <select class="chip-select" id="newTaskStatus" aria-label="Status" required>
+                  <option value="">Status</option>
+                  <option value="not_started">Not started</option>
+                  <option value="in_progress">In progress</option>
+                  <option value="done">Done</option>
+                  <option value="on_hold">On hold</option>
+                </select>
+              </label>
+              <label class="quick-chip" for="newTaskDue">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                  <circle cx="12" cy="12" r="10"></circle>
+                  <polyline points="12 6 12 12 16 14"></polyline>
+                </svg>
+                <input type="date" id="newTaskDue" aria-label="Due date" required>
+              </label>
+              <label class="quick-chip" for="newTaskPriority">
+                <span class="chip-icon-diamond">◇</span>
+                <select class="chip-select" id="newTaskPriority" aria-label="Priority" required>
+                  <option value="">Priority</option>
+                  <option value="None">No priority</option>
+                  <option value="Low">Low</option>
+                  <option value="Medium">Medium</option>
+                  <option value="High">High</option>
+                  <option value="Urgent">Urgent</option>
+                </select>
+              </label>
+              <label class="quick-chip" for="newTaskAssignee">
+                <span class="prop-avatar-tiny">👤</span>
+                <select class="chip-select" id="newTaskAssignee" aria-label="Assigned to" required>
+                  <option value="">Assigned to</option>
+                  <option value="Unassigned">Unassigned</option>
+                  <option value="RK">RK · Ravi Kumar</option>
+                  <option value="MC">MC · Midhun Raj</option>
+                  <option value="SC">Sarah Chen</option>
+                  <option value="CM">Carlos Mendez</option>
+                  <option value="SP">Samir Patel</option>
+                </select>
+              </label>
+              <label class="quick-chip" for="newTaskStart">
+                <input type="date" id="newTaskStart" aria-label="Start date" required>
+              </label>
+              <label class="quick-chip" for="newTaskProject">
+                <select class="chip-select" id="newTaskProject" aria-label="Project" required>
+                  <option value="">Project</option>
+                  <option value="AME Estimation">AME Estimation</option>
+                  <option value="Fitout work">Fitout work</option>
+                  <option value="Table Ping">Table Ping</option>
+                  <option value="IT Operations">IT Operations</option>
+                  <option value="Development Testing">Development Testing</option>
+                  <option value="IT Service Requests">IT Service Requests</option>
+                  <option value="Testing the CR field">Testing the CR field</option>
+                </select>
+              </label>
+            </div>
+            <div class="form-group">
+              <label for="newTaskLabelInput">Labels</label>
+              <div class="new-task-label-row">
+                <input type="text" id="newTaskLabelInput" placeholder="Add a label">
+                <button type="button" class="new-task-label-add" id="newTaskAddLabelBtn">Add</button>
+              </div>
+              <div class="labels-container chip-labels" id="newTaskLabels"></div>
+            </div>
+            <div class="form-group">
+              <label for="newTaskDescription">Description</label>
+              <textarea id="newTaskDescription" rows="3" placeholder="Add a description" required></textarea>
+            </div>
+            <button type="submit" class="primary-pill-btn full-width">Create task</button>
+          </form>
+        </div>
+      </div>
+
+      <section class="project-settings-panel" id="projectSettingsPanel" aria-hidden="true">
+        <button type="button" class="project-settings-backdrop" id="projectSettingsBackdrop" aria-label="Close project settings"></button>
+        <div class="project-settings-sheet" role="dialog" aria-labelledby="projectSettingsHeading">
+          <div class="ps-handle"></div>
+          <header class="ps-header">
+            <button type="button" class="ps-close" id="closeProjectSettingsBtn" aria-label="Close">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+            </button>
+            <h2 class="ps-heading" id="projectSettingsHeading">Project</h2>
+            <span class="ps-header-spacer"></span>
+          </header>
+          <div class="ps-body" id="projectSettingsBody"></div>
+          <footer class="ps-footer">
+            <button type="button" class="ps-save" id="saveProjectSettingsBtn">Save changes</button>
+          </footer>
+        </div>
+        <div class="ps-picker" id="psPicker" hidden>
+          <button type="button" class="ps-picker-backdrop" id="psPickerBackdrop" aria-label="Close"></button>
+          <div class="ps-picker-sheet" role="dialog" aria-labelledby="psPickerTitle">
+            <div class="ps-handle"></div>
+            <h3 class="ps-picker-title" id="psPickerTitle"></h3>
+            <div class="ps-picker-body" id="psPickerBody"></div>
+          </div>
+        </div>
+      </section>
+
+      <section class="sub-view-panel" id="viewTimeTracking">
+        <header class="subview-header">
+          <button class="back-pill-btn" id="backFromTimeTracking" type="button" aria-label="Back">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="15 18 9 12 15 6"></polyline>
+            </svg>
+          </button>
+          <h2 class="subview-title">Time tracking</h2>
+          <span class="subview-header-spacer" aria-hidden="true"></span>
+        </header>
+
+        <div class="tday">
+          <button type="button" class="tday-date" id="tdayDateBtn">
+            <span id="tdayDateLabel">Today, 23 June</span>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true"><polyline points="6 9 12 15 18 9"></polyline></svg>
+          </button>
+
+          <div class="tday-week" id="tdayWeek" aria-label="Week">
+            <div class="tday-week-track" id="tdayWeekTrack"></div>
+          </div>
+
+          <div class="tday-now">
+            <div class="tday-now-meta">
+              <span class="tday-kicker">TODAY</span>
+              <span id="tdayNowDate">23 Jun 2025</span>
+            </div>
+            <div class="tday-now-row">
+              <strong class="tday-clock" id="tdayClock">07:23:15</strong>
+              <button type="button" class="tday-star" id="tdayStar" aria-label="Mark this day" aria-pressed="false">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><polygon points="12 3 14.8 8.8 21 9.6 16.5 14 17.7 20.2 12 17.2 6.3 20.2 7.5 14 3 9.6 9.2 8.8 12 3"></polygon></svg>
+              </button>
+            </div>
+          </div>
+
+          <div class="tday-list" id="tdayList"></div>
+          <p class="tday-empty" id="tdayEmpty" hidden>No time logged this day.</p>
+        </div>
+      </section>
+
+      <div class="mobile-ask" id="mobileAsk" hidden>
+        <button type="button" class="mobile-ask-backdrop" id="mobileAskBackdrop" aria-label="Close"></button>
+        <div class="mobile-ask-sheet" role="dialog" aria-labelledby="mobileAskTitle">
+          <div class="sheet-handle"></div>
+          <h3 class="mobile-ask-title" id="mobileAskTitle"></h3>
+          <div class="mobile-ask-body" id="mobileAskBody"></div>
+        </div>
+      </div>
+
+      </div> <!-- End phone-screen -->
+    </div> <!-- End device-frame -->
+  </main>
+
+  <!-- ==================== MODALS & BOTTOM SHEETS ==================== -->
+
+  <!-- Modal 2: Quick Action Popover Sheet (+) -->
+  <div class="modal-backdrop" id="quickActionsModal">
+    <div class="bottom-sheet quick-sheet">
+      <div class="sheet-handle"></div>
+      <div class="sheet-header">
+        <h3 class="sheet-title">Quick actions</h3>
+        <button class="close-sheet-btn" id="closeQuickActionsBtn">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+            <line x1="18" y1="6" x2="6" y2="18"></line>
+            <line x1="6" y1="6" x2="18" y2="18"></line>
+          </svg>
+        </button>
+      </div>
+      <div class="quick-grid">
+        <button class="quick-tile" id="quickArriveTile">
+          <div class="tile-icon-circle yellow-bg">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M12 21C16 16.5 19 13 19 9A7 7 0 0 0 5 9c0 4 3 7.5 7 12z"></path>
+              <circle cx="12" cy="9" r="2.5"></circle>
+            </svg>
+          </div>
+          <span>Check in</span>
+        </button>
+
+        <button class="quick-tile" id="quickTaskTile">
+          <div class="tile-icon-circle blue-bg">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polyline points="9 11 12 14 22 4"></polyline>
+              <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path>
+            </svg>
+          </div>
+          <span>New task</span>
+        </button>
+
+        <button class="quick-tile" id="quickNoteTile">
+          <div class="tile-icon-circle green-bg">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+              <polyline points="14 2 14 8 20 8"></polyline>
+              <line x1="16" y1="13" x2="8" y2="13"></line>
+            </svg>
+          </div>
+          <span>Field note</span>
+        </button>
+
+        <button class="quick-tile" id="quickPhotoTile">
+          <div class="tile-icon-circle purple-bg">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"></path>
+              <circle cx="12" cy="13" r="4"></circle>
+            </svg>
+          </div>
+          <span>Photo</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal 4: Add Field Note Modal -->
+  <div class="modal-backdrop" id="addNoteModal">
+    <div class="bottom-sheet">
+      <div class="sheet-handle"></div>
+      <div class="sheet-header">
+        <h3 class="sheet-title">Field note</h3>
+        <button class="close-sheet-btn" id="closeAddNoteModalBtn">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+            <line x1="18" y1="6" x2="6" y2="18"></line>
+            <line x1="6" y1="6" x2="18" y2="18"></line>
+          </svg>
+        </button>
+      </div>
+      <form class="sheet-form" id="newNoteForm">
+        <div class="form-group">
+          <label>Title</label>
+          <input type="text" id="noteTitleInput" placeholder="What did you observe?" required>
+        </div>
+        <div class="form-group">
+          <label>Category</label>
+          <div class="tag-selector-row">
+            <span class="tag-choice active" data-tag="Safety">Safety</span>
+            <span class="tag-choice" data-tag="Progress">Progress</span>
+            <span class="tag-choice" data-tag="Materials">Materials</span>
+            <span class="tag-choice" data-tag="Weather">Weather</span>
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Details</label>
+          <textarea id="noteContentInput" rows="3" placeholder="Add the details" required></textarea>
+        </div>
+        <button type="submit" class="primary-pill-btn full-width">Save note</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Modal 5: Space Context Menu Sheet (...) -->
+  <div class="modal-backdrop" id="spaceContextMenuModal">
+    <div class="bottom-sheet quick-sheet">
+      <div class="sheet-handle"></div>
+      <div class="sheet-header">
+        <div>
+          <span class="sheet-eyebrow" id="ctxMenuCategory">Space</span>
+          <h3 class="sheet-title" id="ctxMenuTitle">AME Estimation</h3>
+        </div>
+        <button class="close-sheet-btn" id="closeSpaceCtxMenuBtn">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+        </button>
+      </div>
+      <div class="ctx-options-list">
+        <button class="ctx-option-row" id="ctxSelectSpaceBtn">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>
+          <span>Set as current space</span>
+        </button>
+        <button class="ctx-option-row" id="ctxRenameSpaceBtn">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20h9"></path><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path></svg>
+          <span>Rename</span>
+        </button>
+        <button class="ctx-option-row" id="ctxManageMembersBtn">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+          <span>Manage access</span>
+        </button>
+        <button class="ctx-option-row text-danger" id="ctxArchiveSpaceBtn">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
+          <span>Archive</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal 6: Employees Directory Sheet -->
+  <div class="modal-backdrop" id="employeesModal">
+    <div class="bottom-sheet">
+      <div class="sheet-handle"></div>
+      <div class="sheet-header">
+        <div>
+          <span class="sheet-eyebrow">PEOPLE</span>
+          <h3 class="sheet-title">Employees</h3>
+        </div>
+        <button class="close-sheet-btn" id="closeEmployeesModalBtn">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+        </button>
+      </div>
+      <div class="employees-list">
+        <div class="employee-card">
+          <div class="emp-avatar">M</div>
+          <div class="emp-info">
+            <strong>Midhun Raj</strong>
+            <span>Lead Site Inspector · Field Operations</span>
+          </div>
+          <span class="emp-badge active">On Site</span>
+        </div>
+        <div class="employee-card">
+          <div class="emp-avatar">S</div>
+          <div class="emp-info">
+            <strong>Sarah Chen</strong>
+            <span>Structural Engineer · BuildCorp</span>
+          </div>
+          <span class="emp-badge active">On Site</span>
+        </div>
+        <div class="employee-card">
+          <div class="emp-avatar">D</div>
+          <div class="emp-info">
+            <strong>David Miller</strong>
+            <span>Safety Supervisor · Metro Center</span>
+          </div>
+          <span class="emp-badge idle">In Transit</span>
+        </div>
+        <div class="employee-card">
+          <div class="emp-avatar">A</div>
+          <div class="emp-info">
+            <strong>Alex Vance</strong>
+            <span>HVAC Systems Tech · Vertex</span>
+          </div>
+          <span class="emp-badge active">On Site</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal: Manage Custom Fields & Permissions -->
+  <div class="modal-backdrop" id="manageFieldsModal">
+    <div class="bottom-sheet manage-fields-sheet">
+      <div class="sheet-handle"></div>
+      <div class="sheet-header">
+        <div>
+          <span class="sheet-eyebrow">Setup</span>
+          <h3 class="sheet-title">Capture fields</h3>
+        </div>
+        <button class="close-sheet-btn" id="closeManageFieldsModalBtn">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+        </button>
+      </div>
+
+      <!-- Permission Role Status Banner -->
+      <div class="role-permission-banner" id="modalRoleBanner">
+        <div class="role-banner-left">
+          <span class="role-banner-icon" id="modalRoleBannerIcon">🛡️</span>
+          <div>
+            <div class="role-banner-title">
+              Active role: <strong id="modalRoleLabel">Administrator</strong>
+            </div>
+            <p class="role-banner-desc" id="modalRoleDesc">You can add fields, edit values, and choose who can change them.</p>
+          </div>
+        </div>
+        <button class="switch-role-pill-btn" id="modalSwitchRoleBtn" title="Simulate permission role">
+          Switch role
+        </button>
+      </div>
+
+      <!-- Add New Custom Field Form -->
+      <div class="manage-fields-add-card" id="manageFieldsAddCard">
+        <h4 class="card-subtitle">Add a field</h4>
+        <div class="field-form-grid">
+          <div class="form-group">
+            <label>Name</label>
+            <input type="text" id="newFieldNameInput" placeholder="e.g. Material Code, Subcontractor, Margin %">
+          </div>
+          <div class="form-group">
+            <label>Type</label>
+            <select id="newFieldTypeSelect">
+              <option value="text" selected>Text</option>
+              <option value="number">Number</option>
+              <option value="datetime">Date and time</option>
+              <option value="date">Date</option>
+              <option value="file">File</option>
+              <option value="user">Person</option>
+              <option value="select">Dropdown</option>
+              <option value="currency">Currency</option>
+              <option value="formula">Formula</option>
+            </select>
+          </div>
+          <div class="form-group" id="newFieldOptionsGroup" style="display: none;">
+            <label>Options</label>
+            <input type="text" id="newFieldOptionsInput" placeholder="Separate options with commas">
+          </div>
+          <div class="form-group">
+            <label>Starting value</label>
+            <input type="text" id="newFieldValueInput" placeholder="e.g. 1 or 300">
+          </div>
+          <div class="form-group">
+            <label>Who can edit</label>
+            <select id="newFieldPermissionSelect">
+              <option value="all">Everyone</option>
+              <option value="admin_only" selected>Administrators</option>
+              <option value="pm_only">Project managers</option>
+              <option value="readonly">Read only</option>
+            </select>
+          </div>
+        </div>
+        <button class="primary-action-btn" id="submitAddCustomFieldBtn">Add field</button>
+      </div>
+
+      <!-- Existing Fields List & Configuration -->
+      <div class="manage-fields-existing-section">
+        <h4 class="card-subtitle">Fields (<span id="existingFieldsCount">5</span>)</h4>
+        <div class="manage-fields-list" id="manageFieldsList">
+          <!-- Rendered dynamically -->
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Notification element -->
+  <div class="toast-toast" id="toastMessage">
+    <div class="toast-icon">✓</div>
+    <span class="toast-text" id="toastText">Task updated</span>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>

@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>snap · Sign in</title>
+  <link rel="icon" type="image/png" href="snap-logo.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="login.css">
+</head>
+<body>
+
+  <header class="desktop-toolbar">
+    <div class="toolbar-brand">
+      <span class="toolbar-logo">
+        <img src="snap-logo.png" alt="snap logo" class="toolbar-logo-img">
+      </span>
+      <span class="toolbar-title">snap</span>
+      <span class="toolbar-tagline">From Notes to Action</span>
+      <span class="toolbar-badge">Sign in</span>
+    </div>
+    <div class="toolbar-actions">
+      <a class="tool-btn" href="index.html">Open app</a>
+    </div>
+  </header>
+
+  <main class="app-viewport-wrapper">
+    <div class="device-frame" id="deviceFrame">
+      <div class="frame-notch-wrapper">
+        <div class="dynamic-island"></div>
+      </div>
+
+      <div class="phone-screen" id="phoneScreen">
+        <div class="status-bar" id="statusBar">
+          <span class="status-time" id="statusClock">9:41</span>
+          <div class="status-icons">
+            <svg class="status-icon" width="17" height="11" viewBox="0 0 17 11" fill="currentColor" aria-hidden="true">
+              <path d="M1.5 8.5H3V10.5H1.5V8.5ZM5 6H6.5V10.5H5V6ZM8.5 3.5H10V10.5H8.5V3.5ZM12 1H13.5V10.5H12V1Z"/>
+            </svg>
+            <svg class="status-icon" width="16" height="12" viewBox="0 0 16 12" fill="currentColor" aria-hidden="true">
+              <path d="M8 9.5C8.82843 9.5 9.5 8.82843 9.5 8C9.5 7.17157 8.82843 6.5 8 6.5C7.17157 6.5 6.5 7.17157 6.5 8C6.5 8.82843 7.17157 9.5 8 9.5Z"/>
+              <path d="M4.9 5.4C5.7 4.6 6.8 4.1 8 4.1C9.2 4.1 10.3 4.6 11.1 5.4L12.2 4.3C11.1 3.2 9.6 2.5 8 2.5C6.4 2.5 4.9 3.2 3.8 4.3L4.9 5.4Z"/>
+            </svg>
+            <div class="battery-indicator" aria-hidden="true">
+              <div class="battery-level"></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="screen-scroll-container">
+          <section class="login-screen">
+            <div class="login-brand">
+              <img src="snap-logo.png" alt="">
+              <div>
+                <span class="login-brand-name">snap</span>
+                <span class="login-brand-tag">From Notes to Action</span>
+              </div>
+            </div>
+
+            <div class="login-panel" id="signInPanel">
+              <h1 class="login-title">Sign in</h1>
+              <p class="login-lead">Use your work email to open your projects.</p>
+
+              <form id="signInForm" novalidate>
+                <div class="login-field">
+                  <label for="workEmail">Work email</label>
+                  <input id="workEmail" name="email" type="email" inputmode="email" autocomplete="username" autocapitalize="none" spellcheck="false" placeholder="name@company.com" required>
+                  <p class="login-error" id="emailError" role="alert"></p>
+                </div>
+
+                <div class="login-field has-toggle">
+                  <div class="login-label-row">
+                    <label for="workPassword">Password</label>
+                  </div>
+                  <div class="login-control">
+                    <input id="workPassword" name="password" type="password" autocomplete="current-password" placeholder="At least 8 characters" minlength="8" required>
+                    <button type="button" class="login-reveal" id="togglePassword" aria-pressed="false" aria-controls="workPassword">Show</button>
+                  </div>
+                  <p class="login-error" id="passwordError" role="alert"></p>
+                </div>
+
+                <div class="login-row">
+                  <label class="login-check">
+                    <input type="checkbox" id="keepSignedIn" name="remember">
+                    <span>Keep me signed in</span>
+                  </label>
+                  <button type="button" class="login-text-btn" id="forgotPasswordBtn">Forgot password?</button>
+                </div>
+
+                <button type="submit" class="login-submit" id="signInBtn">Sign in</button>
+              </form>
+
+              <div class="login-split" aria-hidden="true">or</div>
+
+              <button type="button" class="login-sso" id="ssoBtn">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                  <rect x="3" y="11" width="18" height="11" rx="2"></rect>
+                  <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+                </svg>
+                Continue with company account
+              </button>
+
+              <p class="login-footnote">Need access? Ask your administrator.</p>
+            </div>
+
+            <div class="login-panel" id="resetPanel" hidden>
+              <button type="button" class="login-back" id="backToSignIn">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true"><polyline points="15 18 9 12 15 6"></polyline></svg>
+                Back
+              </button>
+              <h1 class="login-title">Reset password</h1>
+              <p class="login-lead">Enter your work email. If an account exists, we will send a reset link.</p>
+
+              <form id="resetForm" novalidate>
+                <div class="login-field">
+                  <label for="resetEmail">Work email</label>
+                  <input id="resetEmail" name="email" type="email" inputmode="email" autocomplete="username" autocapitalize="none" spellcheck="false" placeholder="name@company.com" required>
+                  <p class="login-error" id="resetEmailError" role="alert"></p>
+                </div>
+                <button type="submit" class="login-submit" id="resetBtn">Send reset link</button>
+              </form>
+
+              <p class="login-note" id="resetNote" hidden></p>
+            </div>
+          </section>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <script>
+    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+    const signInPanel = document.getElementById('signInPanel');
+    const resetPanel = document.getElementById('resetPanel');
+    const signInForm = document.getElementById('signInForm');
+    const resetForm = document.getElementById('resetForm');
+    const emailInput = document.getElementById('workEmail');
+    const passwordInput = document.getElementById('workPassword');
+    const emailError = document.getElementById('emailError');
+    const passwordError = document.getElementById('passwordError');
+    const resetEmail = document.getElementById('resetEmail');
+    const resetEmailError = document.getElementById('resetEmailError');
+    const resetNote = document.getElementById('resetNote');
+    const signInBtn = document.getElementById('signInBtn');
+    const togglePassword = document.getElementById('togglePassword');
+
+    function setError(input, node, message) {
+      node.textContent = message;
+      input.setAttribute('aria-invalid', message ? 'true' : 'false');
+      if (message) input.setAttribute('aria-describedby', node.id);
+      else input.removeAttribute('aria-describedby');
+    }
+
+    function validEmail(value) {
+      return emailPattern.test(value.trim());
+    }
+
+    function enterApp() {
+      window.location.href = 'index.html';
+    }
+
+    togglePassword.addEventListener('click', () => {
+      const hidden = passwordInput.type === 'password';
+      passwordInput.type = hidden ? 'text' : 'password';
+      togglePassword.textContent = hidden ? 'Hide' : 'Show';
+      togglePassword.setAttribute('aria-pressed', hidden ? 'true' : 'false');
+      togglePassword.setAttribute('aria-label', hidden ? 'Hide password' : 'Show password');
+    });
+
+    signInForm.addEventListener('submit', (event) => {
+      event.preventDefault();
+      const email = emailInput.value.trim();
+      const password = passwordInput.value;
+      let ok = true;
+
+      if (!email) {
+        setError(emailInput, emailError, 'Enter your work email.');
+        ok = false;
+      } else if (!validEmail(email)) {
+        setError(emailInput, emailError, 'Enter a valid email address.');
+        ok = false;
+      } else {
+        setError(emailInput, emailError, '');
+      }
+
+      if (!password) {
+        setError(passwordInput, passwordError, 'Enter your password.');
+        ok = false;
+      } else if (password.length < 8) {
+        setError(passwordInput, passwordError, 'Use at least 8 characters.');
+        ok = false;
+      } else {
+        setError(passwordInput, passwordError, '');
+      }
+
+      if (!ok) return;
+      signInBtn.disabled = true;
+      signInBtn.textContent = 'Signing in';
+      window.setTimeout(enterApp, 350);
+    });
+
+    document.getElementById('ssoBtn').addEventListener('click', () => {
+      document.getElementById('ssoBtn').disabled = true;
+      document.getElementById('ssoBtn').textContent = 'Opening company account';
+      window.setTimeout(enterApp, 350);
+    });
+
+    document.getElementById('forgotPasswordBtn').addEventListener('click', () => {
+      resetEmail.value = emailInput.value.trim();
+      resetEmailError.textContent = '';
+      resetNote.hidden = true;
+      signInPanel.hidden = true;
+      resetPanel.hidden = false;
+      resetEmail.focus();
+    });
+
+    document.getElementById('backToSignIn').addEventListener('click', () => {
+      resetPanel.hidden = true;
+      signInPanel.hidden = false;
+      emailInput.focus();
+    });
+
+    resetForm.addEventListener('submit', (event) => {
+      event.preventDefault();
+      const email = resetEmail.value.trim();
+      if (!email) {
+        setError(resetEmail, resetEmailError, 'Enter your work email.');
+        resetNote.hidden = true;
+        return;
+      }
+      if (!validEmail(email)) {
+        setError(resetEmail, resetEmailError, 'Enter a valid email address.');
+        resetNote.hidden = true;
+        return;
+      }
+      setError(resetEmail, resetEmailError, '');
+      resetNote.hidden = false;
+      resetNote.textContent = 'If an account exists for this email, a reset link is on its way.';
+    });
+
+    const clock = document.getElementById('statusClock');
+    const paintClock = () => {
+      const now = new Date();
+      clock.textContent = now.toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' });
+    };
+    paintClock();
+    window.setInterval(paintClock, 30000);
+  </script>
+</body>
+</html>
